@@ -1,32 +1,236 @@
-//1、引入http模組
+// ==========================================
+// Node.js + EJS 網頁伺服器
+// ==========================================
+// 功能說明：
+// 1. 提供多頁面路由（首頁、計算器、404頁面）
+// 2. 支援 EJS 模板動態渲染
+// 3. 處理靜態資源（CSS、JS、圖片等）
+// 4. 自動錯誤處理與 404 頁面導向
+// ==========================================
+
+// ------------------------------------------
+// 引入必要的 Node.js 核心模組
+// ------------------------------------------
+
+// http 模組：用於創建 HTTP 伺服器
 const http = require('http');
 
-//2、創建http伺服器
-const server = http.createServer(function (request, response) {
-  const url = request.url;  //獲取請求位址
-  console.log(url)
-  var answer = '';  //設置回應內容
+// fs 模組 (File System)：用於讀取檔案系統中的文件
+const fs = require('fs');
 
-  // 請寫 switch完成各個收到不同的請求以及輸出不同的回應字串 (使用 switch)
+// ejs 模組：用於渲染 EJS 模板引擎，將動態內容嵌入 HTML
+const ejs = require('ejs');
 
-//ans：
-switch (url) {  // 檢查變數 url (即客戶端請求的 URL) 的值是什麼
-    case '/': //選項標籤，表記url為跟目錄的這個條件
-        answer = "index.html 輸出部分"; //由全域變數創造的 answer 儲存回應內容
-        break; // break是用來跳出 switch 結構
-    case '/calculator': //選項標籤，表記url為calculator計算器的這個條件，calculator在跟目錄後面，所以它是在跟目錄底下的一層
-        answer = "index2.html 輸出的部分"; //邏輯如上，是回應calculator請求的內容
-        break;
-    default:
-        answer = "error.html 輸出的部分";//邏輯如上，是回應除了跟目錄及calculator以外的請求的內容
-        break; 
+// path 模組：用於處理和解析文件路徑，提取副檔名
+const path = require('path');
+
+// ==========================================
+// 創建並配置 HTTP 伺服器
+// ==========================================
+
+http.createServer((req, res) => {
+  // req (request): 請求物件，包含客戶端發送的所有資訊（URL、標頭等）
+  // res (response): 回應物件，用於向客戶端發送回應（HTML、狀態碼等）
+
+  // ==========================================
+  // 步驟 1: URL 路由與頁面分派
+  // ==========================================
+
+  // 宣告兩個變數來處理不同類型的請求：
+  // filePath: 儲存要渲染的 EJS 模板文件路徑
+  // fileOtherFile: 儲存靜態資源（CSS、JS 等）的路徑
+  let filePath = '';
+  let fileOtherFile = '';
+
+  // Switch根據不同路由要寫的部分
+
+switch (req.url) { // req.url 是用來取得使用者請求的路徑，是http模組提供的屬性
+    case '/':
+      // 首頁路由
+      filePath = '/threas.ejs';        // 跟目錄路徑通往 index.ejs
+      break;
+    default: //這裡是原本要傳給其他檔案的路由
+      break;
+  }
+if (req.url.endsWith('.css') || req.url.endsWith('.js') || req.url.endsWith('.png')) { // endsWith是用來判斷字串結尾的函式，判斷是否為.css .js .png結尾
+  // 判斷是否為靜態資源請求，要求判斷是否有.css .js .png結尾的靜態資源
+  fileOtherFile = req.url;             // 靜態資源路徑，如果沒有這個，那靜態資源將抓不到
+  // 沒有endWith的話，靜態資源會被當成ejs頁面處理，導致錯誤，也導致fileOtherFile一直是空字串
 }
 
+
   
-  response.setHeader('Content-Type', 'text/plain;charset=utf-8'); //設置回應頭編碼為utf-8，避免中文亂碼
-  response.end(answer);
+
+  // ==========================================
+  // 步驟 2: 判斷文件類型（提取副檔名）
+  // ==========================================
+
+  // 使用三元運算子判斷要從哪個路徑提取副檔名：
+  // - 如果 fileOtherFile 是空字串 → 從 filePath 提取（代表是 EJS 頁面）
+  // - 如果 fileOtherFile 有值 → 從 fileOtherFile 提取（代表是靜態資源）
+  //
+  // path.extname() 函數會提取文件的副檔名
+  // 範例：
+  //   path.extname('/index.ejs') → '.ejs'
+  //   path.extname('/style.css') → '.css'
+  //   path.extname('/script.js') → '.js'
+  const extname = (fileOtherFile === '') ? path.extname(filePath) : path.extname(fileOtherFile);
+
+  // ==========================================
+  // 步驟 3: 定義 MIME 類型映射表
+  // ==========================================
+
+  // MIME 類型（Content-Type）告訴瀏覽器如何處理接收到的文件
+  // 如果設定錯誤，可能導致：
+  // - CSS 不生效（被當作純文字）
+  // - JavaScript 無法執行
+  // - 圖片無法顯示
+  const contentTypes = {
+    '.html': 'text/html; charset=utf-8',        // HTML 網頁文件
+    '.ejs': 'text/html; charset=utf-8',         // EJS 模板（渲染後輸出為 HTML）
+    '.js': 'text/javascript; charset=utf-8',    // JavaScript 腳本文件
+    '.css': 'text/css; charset=utf-8',          // CSS 樣式表文件
+    '.json': 'application/json',                // JSON 資料格式
+    '.png': 'image/png',                        // PNG 圖片格式
+    '.jpg': 'image/jpg',                        // JPG/JPEG 圖片格式
+    '.gif': 'image/gif',                        // GIF 動畫圖片
+    '.svg': 'image/svg+xml',                    // SVG 向量圖形
+    '.ico': 'image/x-icon'                      // 網站 favicon 圖示
+  };
+
+  // ==========================================
+  // 步驟 4: 查找對應的 Content-Type
+  // ==========================================
+
+  // 從映射表中查找當前文件對應的 MIME 類型
+  // 使用 || 運算子提供預設值：
+  // - 如果在映射表中找到對應的副檔名，使用該 MIME 類型
+  // - 如果找不到，預設使用 'text/plain'（純文字格式）
+  const contentType = contentTypes[extname] || 'text/plain';
+
+  // ==========================================
+  // 請求處理：根據文件類型分流
+  // ==========================================
+
+  // 使用 if-else 判斷式區分兩種處理方式：
+  // 1. EJS 模板渲染（動態內容）
+  // 2. 靜態文件傳送（CSS、JS、圖片等）
+
+  // ------------------------------------------
+  // 處理方式 A: EJS 模板渲染
+  // ------------------------------------------
+  // 適用情況：extname === '.ejs'
+  // 處理頁面：index.ejs, index2.ejs, index3.ejs
+  if (extname === '.ejs') {
+
+    // 讀取 EJS 模板文件
+    // 參數說明：
+    //   ('.' + filePath): 構建完整路徑，'.' 代表當前目錄
+    //                     例如：'/index.ejs' → './index.ejs'
+    //   'utf8': 指定文件編碼格式為 UTF-8，確保中文正確顯示
+    //   (err, template): 回調函數的參數
+    //                    err: 錯誤物件（若成功則為 null）
+    //                    template: 讀取到的文件內容（字串）
+    fs.readFile(('.' + filePath), 'utf8', (err, template) => {
+
+      // 錯誤處理：檢查文件是否讀取失敗
+      if (err) {
+        // 設定 HTTP 狀態碼 500（Internal Server Error - 伺服器內部錯誤）
+        // 這表示伺服器嘗試處理請求時發生問題
+        res.writeHead(500, { 'Content-Type': 'text/html; charset=utf-8' });
+
+        // 向客戶端發送錯誤訊息，包含具體的錯誤原因
+        res.end('錯誤：無法讀取模板文件 - ' + err.message);
+
+        // 使用 return 提前結束函數，避免執行後續的渲染代碼
+        return;
+      }
+
+      // 使用 EJS 引擎渲染模板
+      // ejs.render() 會：
+      // 1. 解析 EJS 語法（如 <%= %>, <% %> 等）
+      // 2. 執行嵌入的 JavaScript 代碼
+      // 3. 將結果轉換成純 HTML 字串
+      const html = ejs.render(template);
+
+      // 設定 HTTP 回應標頭
+      // 狀態碼 200: OK（請求成功）
+      // Content-Type: 告訴瀏覽器這是 HTML 文件，使用 UTF-8 編碼
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+
+      // 將渲染完成的 HTML 發送給客戶端（瀏覽器）
+      res.end(html);
+    });
+
+  } else {
+    // ------------------------------------------
+    // 處理方式 B: 靜態文件傳送
+    // ------------------------------------------
+    // 適用情況：extname !== '.ejs'（例如 .css, .js, .png 等）
+    // 處理文件：style.css, style2.css, style3.css, script.js
+
+    // 構建完整的靜態文件路徑
+    // 在路徑前加上 '.' 表示當前工作目錄
+    // 範例：
+    //   '/style.css' → './style.css'
+    //   '/script.js' → './script.js'
+    const staticFilePath = '.' + fileOtherFile;
+
+    // 讀取靜態文件
+    // 注意：這裡「沒有」指定 'utf8' 編碼
+    // 原因：某些文件是二進制格式（如圖片、字型），不能用文字方式讀取
+    // fs.readFile 會以 Buffer 格式讀取文件（可處理任何類型的文件）
+    fs.readFile(staticFilePath, (err, content) => {
+
+      // 檢查靜態文件是否讀取失敗
+      if (err) {
+        // ------------------------------------------
+        // 靜態文件不存在 → 顯示 404 錯誤頁面
+        // ------------------------------------------
+        // 當靜態資源載入失敗時（例如：請求不存在的文件或網址）
+        // 不直接回傳錯誤訊息，而是顯示友善的 404 錯誤頁面（index3.ejs）
+        const index3ErrPath = './index3.ejs';
+        fs.readFile(index3ErrPath, 'utf8', (errEjs, template) => { 
+          //fs.readFile他是由path, encoding, callback三個參數組成，其中 callback他預設要有兩個參數，一個參數用來接錯誤訊息err，一個參數用來接讀取到的檔案內容template
+          if (errEjs) { //這裡就是用來處理index3.ejs讀取失敗情況的參數
+            console.error('讀取失敗:', errEjs);
+            res.end('404 - 找不到文件：'); // 如果 404 檔也讀不到
+          } else {//這裡是index3.ejs讀取成功的情況
+            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+            // 設定 HTTP 狀態碼 404（找不到資源）
+          // 向客戶端發送 404 錯誤訊息
+            res.end(template);//這裡的template是讀取到的index3.ejs檔案內容，所以用res.end(template)把內容傳給客戶端，這裡的內容就包括index3.ejs裡面的html結構
+          }
+        });
+      } else {
+        // ------------------------------------------
+        // 靜態文件讀取成功 → 直接發送文件內容
+        // ------------------------------------------
+
+        // 設定 HTTP 狀態碼 200（成功）
+        // Content-Type 根據文件副檔名自動設定（從 contentTypes 映射表查詢）
+        // 例如：
+        //   .css 檔案 → 'text/css; charset=utf-8'
+        //   .js 檔案 → 'text/javascript; charset=utf-8'
+        //   .png 檔案 → 'image/png'
+        res.writeHead(200, { 'Content-Type': contentType });
+
+        // 將文件內容發送給客戶端
+        // content 變數的類型取決於文件：
+        // - 文字文件（CSS、JS）：Buffer 會自動轉換為文字
+        // - 二進制文件（圖片）：直接以 Buffer 形式傳送
+        res.end(content);
+      }
+    });
+  }
+}).listen(3000, () => {
+
+  // 在終端機（控制台）輸出訊息，告知開發者伺服器已啟動
+  // 使用者可以透過瀏覽器訪問 http://localhost:3000 來查看網站
+  console.log('伺服器已啟動！請訪問 http://localhost:3000');
+  console.log('可用路由：');
+  console.log('  - http://localhost:3000');
+  console.log('  - http://localhost:3000/calculator');
+  console.log('  - 其他路徑將顯示 404 錯誤頁面');
 });
-//3、啟動伺服器監聽8888埠
-server.listen('8888', function () {
-  console.log("伺服器啟動成功，訪問：http://127.0.0.1:8888")
-})
+
