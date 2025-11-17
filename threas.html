@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threads - 首頁</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <div class="logo">Threads</div>
+            <div class="nav-icons">
+                <i class="far fa-heart"></i>
+                <i class="far fa-paper-plane"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="new-post">
+            <div class="avatar">YJ</div>
+            <textarea placeholder="有什麼新鮮事？" rows="3"></textarea>
+            <button disabled>發佈</button>
+        </div>
+
+        <div class="feed">
+            <!-- 貼文範例 1 -->
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-avatar">MJ</div>
+                    <div>
+                        <span class="post-user">markzuckerberg</span>
+                        <span class="post-time">· 2小時</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    今天是 Threads 推出兩週年的日子！感謝每一位加入我們的使用者，一起讓對話更有意義。
+                </div>
+                <div class="post-actions">
+                    <i class="far fa-heart"></i>
+                    <i class="far fa-comment"></i>
+                    <i class="far fa-retweet"></i>
+                    <i class="far fa-paper-plane"></i>
+                </div>
+            </div>
+
+            <!-- 貼文範例 2 -->
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-avatar">EL</div>
+                    <div>
+                        <span class="post-user">elonmusk</span>
+                        <span class="post-time">· 5小時</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    剛剛在 xAI 測試了 Grok-3，速度快到讓我懷疑人生。
+                    這才是真正的 AGI 起飛時刻。
+                </div>
+                <div class="post-actions">
+                    <i class="far fa-heart liked"></i>
+                    <i class="far fa-comment"></i>
+                    <i class="far fa-retweet"></i>
+                    <i class="far fa-paper-plane"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 桌面側邊欄 -->
+    <div class="sidebar">
+        <div class="suggestion-title">為你推薦</div>
+        <div class="suggestion-user">
+            <div class="suggestion-avatar"></div>
+            <div class="suggestion-info">
+                <div class="suggestion-name">natalie</div>
+                <div style="color:#888; font-size:13px;">Instagram 推薦</div>
+            </div>
+            <div class="suggestion-follow">追蹤</div>
+        </div>
+        <div class="suggestion-user">
+            <div class="suggestion-avatar"></div>
+            <div class="suggestion-info">
+                <div class="suggestion-name">techbit</div>
+                <div style="color:#888; font-size:13px;">受歡迎的帳號</div>
+            </div>
+            <div class="suggestion-follow">追蹤</div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <i class="fas fa-home active"></i>
+        <i class="fas fa-search dim"></i>
+        <i class="fas fa-edit dim"></i>
+        <i class="far fa-heart dim"></i>
+        <i class="far fa-user dim"></i>
+    </div>
+
+    <script>
+        // 簡單的發佈按鈕啟用
+        const textarea = document.querySelector('.new-post textarea');
+        const btn = document.querySelector('.new-post button');
+        textarea.addEventListener('input', () => {
+            btn.disabled = textarea.value.trim() === '';
+            btn.style.opacity = textarea.value.trim() ? '1' : '0.5';
+        });
+
+        // 點讚效果
+        document.querySelectorAll('.fa-heart').forEach(icon => {
+            icon.addEventListener('click', () => {
+                icon.classList.toggle('liked');
+                icon.classList.toggle('far');
+                icon.classList.toggle('fas');
+            });
+        });
+    </script>
+</body>
+
+</html>
