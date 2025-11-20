@@ -1,0 +1,122 @@
+body {
+  margin: 0; /* 移除網頁邊緣的空白 */
+  overflow: hidden; /* 隱藏網頁上看不到的部分，讓地球可以填滿整個螢幕 */
+  background-color: #000; /* 背景設定為黑色，看起來像太空 */
+  font-family: 'Helvetica Neue', Arial, sans-serif; /* 設定文字使用的字體 */
+}
+
+#weather-card {
+  position: absolute; /* 讓卡片可以「浮」在網頁上，不影響地球 */
+  top: 50%; /* 距離頂端 50% 的位置 */
+  right: 10%; /* 距離右邊緣 10% 的位置 */
+  transform: translateY(-50%); /* 讓卡片垂直置中在螢幕上 */
+  width: 320px; /* 卡片的寬度 */
+  
+  /* 讓卡片背景看起來是半透明、有點模糊的樣子（像磨砂玻璃） */
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); /* 針對不同瀏覽器的設定 */
+  
+  border: 1px solid rgba(255, 255, 255, 0.2); /* 設定卡片的邊框顏色 */
+  border-radius: 20px; /* 讓卡片的邊角變圓滑 */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* 設定卡片的陰影效果 */
+  
+  color: white; /* 卡片內文字的顏色 */
+  padding: 25px; /* 卡片內部的留白空間 */
+  /* 設定卡片出現和消失時的動畫效果，讓它看起來是彈跳進來的 */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  opacity: 1;
+  z-index: 10; /* 確保卡片會蓋在地球上面 */
+}
+
+/* 當卡片被隱藏時的樣式 */
+#weather-card.hidden {
+  opacity: 0; /* 讓卡片完全透明 */
+  transform: translateY(-50%) scale(0.8); /* 讓卡片稍微縮小 */
+  pointer-events: none; /* 讓滑鼠無法點到看不見的卡片 */
+  right: -350px; /* 讓卡片往右邊螢幕外滑出去，看起來是消失的 */
+}
+
+/* 關閉按鈕的樣式設定 */
+#close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  cursor: pointer; /* 讓滑鼠移動過去時變成手的形狀 */
+  transition: color 0.2s;
+}
+/* 當滑鼠移到關閉按鈕上時，讓顏色變亮 */
+#close-btn:hover { color: #fff; }
+
+/* 城市名稱的樣式 */
+#city-name {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* 文字陰影 */
+}
+
+/* 溫度和圖示的區塊，使用 flex 讓它們水平並排 */
+.weather-main {
+  display: flex; 
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* 天氣圖示的樣式 */
+#weather-icon {
+  font-size: 4rem; /* 放大圖示 */
+  margin-right: 15px;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); /* 給圖示一點點光暈效果 */
+}
+
+/* 溫度數字的樣式 */
+.temp-container {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.unit { font-size: 1.5rem; font-weight: 400; color: #ddd; }
+
+/* 天氣概況的文字樣式 */
+#weather-desc {
+  font-size: 1.2rem;
+  color: #aad4ff; 
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+/* 分隔線的樣式 */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+  margin: 15px 0;
+}
+
+/* 底部詳細資訊（風速、經緯度）的區塊，使用 flex 讓它們並排 */
+.weather-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column; /* 讓標籤和數值垂直排列 */
+}
+
+.detail-item .label {
+  font-size: 0.8rem;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-item .value {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 4px;
+}

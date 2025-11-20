@@ -1,105 +1,129 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Threads - 首頁</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--設定手機裝置寬度-->
+    <title>社群模擬 - 通知與天氣版</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    <!-- 引入 Font Awesome -->
 </head>
 <body>
-    <header>
-        <div class="container header-inner">
-            <div class="logo">Threads</div>
-            <div class="nav-icons">
-                <i class="far fa-heart"></i>
-                <i class="far fa-paper-plane"></i>
-            </div>
-        </div>
-    </header>
 
-    <main class="container">
-        <div class="new-post">
-            <div class="avatar">YJ</div>
-            <textarea placeholder="有什麼新鮮事？" rows="3"></textarea>
-            <button disabled>發佈</button>
-        </div>
+    <div class="app-container">
+        <nav class="sidebar">  
+            <!-- 設定側邊攔 -->
+            <div class="logo">SocialApp</div>
+            <ul class="nav-links">
+                <li class="nav-item active" data-target="page-home">
+                    <a href="#"><i class="fa-solid fa-house"></i> 主頁</a>
+                </li>
+                <li class="nav-item" data-target="page-search">
+                    <a href="#"><i class="fa-solid fa-magnifying-glass"></i> 搜尋</a>
+                </li>
+                <li>
+                    <a href="./weather/weather.ejs"><i class="fa-solid fa-cloud-sun"></i> 天氣</a>
+                </li>
+                <li class="nav-item" data-target="page-video">
+                    <a href="#"><i class="fa-solid fa-video"></i> 短片</a>
+                </li>
+                <li class="nav-item" data-target="page-messages">
+                    <a href="#"><i class="fa-solid fa-message"></i> 訊息</a>
+                </li>
+                <li class="nav-item" data-target="page-notifications">
+                    <a href="#"><i class="fa-solid fa-bell"></i> 通知</a>
+                </li>
+            </ul>
+        </nav>
 
-        <div class="feed">
-            <!-- 貼文範例 1 -->
-            <div class="post">
-                <div class="post-header">
-                    <div class="post-avatar">MJ</div>
-                    <div>
-                        <span class="post-user">markzuckerberg</span>
-                        <span class="post-time">· 2小時</span>
+        <main id="page-home" class="page-section active">
+            <header class="feed-header"><h2>首頁</h2></header>
+            <div id="feed" class="feed">
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="user-info">
+                            <div class="avatar">S</div>
+                            <span class="username">系統管理員</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>試試看發文或是傳送訊息，你會看到右下角的漂亮通知卡片！</p>
                     </div>
                 </div>
-                <div class="post-content">
-                    今天是 Threads 推出兩週年的日子！感謝每一位加入我們的使用者，一起讓對話更有意義。
-                </div>
-                <div class="post-actions">
-                    <i class="far fa-heart"></i>
-                    <i class="far fa-comment"></i>
-                    <i class="far fa-retweet"></i>
-                    <i class="far fa-paper-plane"></i>
-                </div>
             </div>
+        </main>
 
-            <!-- 貼文範例 2 -->
-            <div class="post">
-                <div class="post-header">
-                    <div class="post-avatar">EL</div>
-                    <div>
-                        <span class="post-user">elonmusk</span>
-                        <span class="post-time">· 5小時</span>
+        <main id="page-messages" class="page-section hidden">
+            <div class="chat-container">
+                <div class="chat-sidebar">
+                    <div class="chat-header-top">聊天室</div>
+                    <ul class="contact-list">
+                        <li class="contact-item active">
+                            <div class="avatar">A</div>
+                            <div class="contact-info">
+                                <div class="contact-name">Alice</div>
+                                <div class="last-msg">線上</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat-window">
+                    <header class="chat-window-header">
+                        <div class="avatar small">A</div>
+                        <span class="chat-with-name">Alice</span>
+                    </header>
+                    <div class="chat-messages" id="chat-messages">
+                        </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="msg-input" placeholder="輸入訊息...">
+                        <button id="send-msg-btn"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
-                <div class="post-content">
-                    剛剛在 xAI 測試了 Grok-3，速度快到讓我懷疑人生。
-                    這才是真正的 AGI 起飛時刻。
-                </div>
-                <div class="post-actions">
-                    <i class="far fa-heart liked"></i>
-                    <i class="far fa-comment"></i>
-                    <i class="far fa-retweet"></i>
-                    <i class="far fa-paper-plane"></i>
-                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <!-- 桌面側邊欄 -->
-    <div class="sidebar">
-        <div class="suggestion-title">為你推薦</div>
-        <div class="suggestion-user">
-            <div class="suggestion-avatar"></div>
-            <div class="suggestion-info">
-                <div class="suggestion-name">natalie</div>
-                <div style="color:#888; font-size:13px;">Instagram 推薦</div>
+        <main id="page-notifications" class="page-section hidden">
+            <header class="feed-header"><h2>通知中心</h2></header>
+            <div class="notification-list" id="notification-list">
+                <div class="noti-item">
+                    <div class="avatar">S</div>
+                    <div class="noti-content">
+                        <p><strong>系統通知</strong> 歡迎來到新版通知中心。</p>
+                        <span class="noti-time">剛剛</span>
+                    </div>
+                </div>
             </div>
-            <div class="suggestion-follow">追蹤</div>
-        </div>
-        <div class="suggestion-user">
-            <div class="suggestion-avatar"></div>
-            <div class="suggestion-info">
-                <div class="suggestion-name">techbit</div>
-                <div style="color:#888; font-size:13px;">受歡迎的帳號</div>
-            </div>
-            <div class="suggestion-follow">追蹤</div>
-        </div>
+        </main>
+
+        <aside class="right-sidebar"></aside>
     </div>
 
-    <div class="bottom-nav">
-        <i class="fas fa-home active"></i>
-        <i class="fas fa-search dim"></i>
-        <i class="fas fa-edit dim"></i>
-        <i class="far fa-heart dim"></i>
-        <i class="far fa-user dim"></i>
+    <button id="fab-btn" class="fab"><i class="fa-solid fa-plus"></i></button>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <div id="post-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>建立新貼文</h3>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="post-text" placeholder="在想些什麼？"></textarea>
+                <div id="image-preview-container" class="hidden">
+                    <img id="image-preview" src="" alt="預覽圖片">
+                    <button id="remove-image" class="remove-img-btn">&times;</button>
+                </div>
+                <div class="modal-actions">
+                    <label for="image-upload" class="upload-icon">
+                        <i class="fa-solid fa-image"></i> 上傳圖片
+                    </label>
+                    <input type="file" id="image-upload" accept="image/*" hidden>
+                    <button id="submit-post" class="post-btn">發布</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
