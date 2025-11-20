@@ -1,63 +1,388 @@
-/* --- 原有 CSS 保持不變 (省略重複部分) --- */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-body { background-color: #f0f2f5; color: #1c1e21; overflow-x: hidden; }
-.app-container { display: flex; min-height: 100vh; max-width: 1200px; margin: 0 auto; }
-.sidebar { width: 250px; padding: 20px; position: sticky; top: 0; height: 100vh; background: #fff; border-right: 1px solid #ddd; }
-.logo { font-size: 24px; font-weight: bold; color: #1877f2; margin-bottom: 30px; }
-.nav-links { list-style: none; }
-.nav-links li { margin-bottom: 10px; }
-.nav-links a { display: flex; align-items: center; text-decoration: none; color: #333; padding: 15px; border-radius: 8px; transition: background 0.2s; }
-.nav-links a:hover, .nav-links li.active a { background-color: #e4e6eb; font-weight: bold; }
-.nav-links a i { margin-right: 15px; width: 25px; text-align: center; }
+* {
+    margin: 0; 
+    padding:0; /* 邊邊都不要留空 */
+    box-sizing: border-box; /* 計算寬度 */
+    font-family: sans-serif; /* 字體sans-serif */
+}  
+/* 網頁上所有物件：邊邊都不要留空（margin:0; padding:0;）
+計算寬度（box-sizing）
+字體sans-serif
+
+ */
+
+body {
+    background-color: #f0f2f5;  /* 淺灰色背景 */
+    color: #1c1e21; /* 深灰色文字 */
+    overflow-x: hidden; /* 不要有橫向捲軸 */
+}  
+/* 整個網頁背景變成淺灰色（像Facebook）
+文字顏色是深灰色
+左右不能有橫向捲軸
+
+ */
+
+.app-container {
+    display: flex; /* 彈性布局 */
+    min-height: 100vh; /* 最少要佔滿整個螢幕高度 */
+    max-width: 1200px; /* 最多寬1200像素 */
+    margin: 0 auto; /* 自動置中 */
+}
+/* 最大的盒子要用「彈性布局」（左右並排）
+至少要佔滿整個螢幕高度
+最多寬1200像素，而且要自動置中
+
+ */
+.sidebar { 
+    width: 250px; /* 固定寬250像素 */
+    padding: 20px; /* 內距20像素 */
+    position: sticky; /* 黏在頂端 */
+    top: 0; /* 黏在頂端 */
+    height: 100vh; /* 高度100vh */
+    background: #fff; /* 白色背景 */
+    border-right: 1px solid #ddd; /* 右邊有淡淡的分隔線 */
+} 
+/* 左邊欄位永遠寬250像素
+往下捲頁面時它會黏在頂端不動（position: sticky）
+背景白色，右邊有一條淡淡的分隔線
+
+ */
+
+.logo {
+    font-size: 24px; 
+    /* 字體大小24像素 */
+    font-weight: bold; /* 粗體 */
+    color: #1877f2; /* 藍色 */
+    margin-bottom: 30px; /* 底部外距30像素 */
+} 
+/*  */
+.nav-links {
+    list-style: none; /* 取消清單預設樣式 */
+}
+/*  */
+.nav-links li {
+    margin-bottom: 10px; /* 底部外距10像素 */
+}
+/*  */
+.nav-links a { 
+    display: flex; /* 彈性布局 */
+    align-items: center; /* 垂直置中 */
+    text-decoration: none; /* 取消底線 */
+    color: #333; /* 深灰色文字 */
+    padding: 15px; /* 內距15像素 */
+    border-radius: 8px; /* 圓角8像素 */
+    transition: background 0.2s; /* 背景變化過渡效果 */
+}
+
+.nav-links a:hover,
+.nav-links li.active a { 
+    background-color: #e4e6eb; /* 淺灰色背景 */
+    font-weight: bold; /* 粗體 */
+}
+/* 選單按鈕的樣子：
+圖示跟文字要垂直對齊
+滑鼠移過去或被選取時會變灰色＋變粗體
+
+ */
+.nav-links a i {
+    margin-right: 15px; /* 右邊外距15像素 */
+    width: 25px; /* 固定寬25像素 */
+    text-align: center; /* 文字置中 */
+}
 
 /* 中間區塊 */
-.page-section { flex: 1; padding: 0 20px; max-width: 800px; width: 100%; display: none; }
-.page-section.active { display: block; }
-.feed-header { padding: 20px 0; border-bottom: 1px solid #ddd; margin-bottom: 20px; font-size: 18px; }
+.page-section {
+    flex: 1; /* 彈性寬度 */
+    padding: 0 20px; /* 左右內距20像素 */
+    max-width: 800px; /* 最多寬800像素 */
+    width: 100%; /* 寬度100% */
+    display: none; /* 預設不顯示 */
+}
+
+.page-section.active {
+    display: block; /* 被選取時顯示 */
+}
+
+.feed-header {
+    padding: 20px 0; /* 上下內距20像素 */
+    border-bottom: 1px solid #ddd; /* 底部有淡淡的分隔線 */
+    margin-bottom: 20px; /* 底部外距20像素 */
+    font-size: 18px; /* 字體大小18像素 */
+}
 
 /* 貼文樣式 */
-.post-card { background: #fff; border-radius: 8px; padding: 15px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-.post-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-.user-info { display: flex; align-items: center; }
-.avatar { width: 40px; height: 40px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px; font-weight: bold; }
-.post-image { width: 100%; border-radius: 8px; margin-top: 10px; }
-.options-btn { border: none; background: none; cursor: pointer; padding: 5px; font-size: 18px; }
+.post-card {
+    background: #fff; /* 白色背景 */
+    border-radius: 8px; /* 圓角8像素 */
+    padding: 15px; /* 內距15像素 */
+    margin-bottom: 20px; /* 底部外距20像素 */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* 淡淡的陰影 */
+}
+/* 每一張貼文卡片都要：
+白色背景
+圓角
+有一點點陰影，看起來像真的卡片
+
+ */
+
+.post-header {
+    display: flex; /* 彈性布局 */
+    justify-content: space-between; /* 左右兩邊對齊 */
+    margin-bottom: 10px; /* 底部外距10像素 */
+}
+
+.user-info {
+    display: flex; /* 彈性布局 */
+    align-items: center; /* 垂直置中 */
+}
+
+.avatar {
+    width: 40px; /* 固定寬40像素 */
+    height: 40px; /* 固定高40像素 */
+    background: #ddd; /* 淺灰色背景 */
+    border-radius: 50%; /* 圓形 */
+    display: flex; /* 彈性布局 */
+    align-items: center; /* 垂直置中 */
+    justify-content: center; /* 水平置中 */
+    margin-right: 10px; /* 右邊外距10像素 */
+    font-weight: bold; /* 粗體 */
+}
+/* 所有頭像都是40×40像素的圓形，裡面會放字母（如 S、A、Me）
+
+*/
+.post-image {
+    width: 100%; /* 寬度100% */
+    border-radius: 8px; /* 圓角8像素 */
+    margin-top: 10px; /* 上方外距10像素 */
+}
+
+.options-btn {
+    border: none; /* 取消按鈕預設樣式 */
+    background: none; /* 取消按鈕預設樣式 */
+    cursor: pointer; /* 滑鼠變手指 */
+    padding: 5px; /* 內距5像素 */
+    font-size: 18px; /* 字體大小18像素 */
+}
 
 /* 聊天樣式 */
-.chat-container { display: flex; height: calc(100vh - 40px); background: #fff; border-radius: 8px; border: 1px solid #ddd; margin-top: 20px; overflow: hidden;}
-.chat-sidebar { width: 30%; border-right: 1px solid #eee; }
-.chat-header-top { padding: 15px; font-weight: bold; border-bottom: 1px solid #eee; }
-.contact-item { padding: 15px; display: flex; align-items: center; cursor: pointer; }
-.contact-item:hover { background: #f5f5f5; }
-.contact-info { margin-left: 10px; }
-.chat-window { flex: 1; display: flex; flex-direction: column; }
-.chat-window-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; font-weight: bold; }
-.chat-messages { flex: 1; padding: 20px; background: #f0f2f5; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-.message { max-width: 70%; padding: 10px 15px; border-radius: 18px; font-size: 15px; }
-.message.sent { align-self: flex-end; background: #0084ff; color: white; }
-.chat-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; }
-#msg-input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #ddd; margin-right: 10px; outline: none; }
-#send-msg-btn { border: none; background: none; color: #0084ff; font-size: 18px; cursor: pointer; }
+.chat-container {
+    display: flex; /* 彈性布局 */
+    height: calc(100vh - 40px); /* 高度佔滿整個螢幕減去內距 */
+    background: #fff; /* 白色背景 */
+    border-radius: 8px; /* 圓角8像素 */
+    border: 1px solid #ddd; /* 淡淡的邊框 */
+    margin-top: 20px; /* 頂部外距20像素 */
+    overflow: hidden; /* 內容超出部分隱藏 */
+}
+
+.chat-sidebar {
+    width: 30%; /* 固定寬30% */
+    border-right: 1px solid #eee; /* 右邊有淡淡的分隔線 */
+}
+
+.chat-header-top {
+    padding: 15px; /* 內距15像素 */
+    font-weight: bold; /* 粗體 */
+    border-bottom: 1px solid #eee; /* 底部有淡淡的分隔線 */
+}
+
+.contact-item {
+    padding: 15px; /* 內距15像素 */
+    display: flex; /* 彈性布局 */
+    align-items: center; /* 垂直置中 */
+    cursor: pointer; /* 滑鼠變手指 */
+}
+
+.contact-item:hover {
+    background: #f5f5f5; /* 滑鼠移過去變淺灰色背景 */
+}
+
+.contact-info {
+    margin-left: 10px; /* 左邊外距10像素 */
+}
+
+.chat-window {
+    flex: 1; /* 彈性寬度 */
+    display: flex; /* 彈性布局 */
+    flex-direction: column; /* 垂直排列 */
+}
+
+.chat-window-header {
+    padding: 15px; /* 內距15像素 */
+    border-bottom: 1px solid #eee;   /* 底部有淡淡的分隔線 */
+    display: flex; /* 彈性布局 */
+    align-items: center; /* 垂直置中 */
+    font-weight: bold; /* 粗體 */
+}
+
+.chat-messages {
+    flex: 1; /* 彈性高度 */
+    padding: 20px; /* 內距20像素 */
+    background: #f0f2f5; /* 淺灰色背景 */
+    overflow-y: auto; /* 垂直出現捲軸 */
+    display: flex; /* 彈性布局 */
+    flex-direction: column; /* 垂直排列 */
+    gap: 10px; /* 項目之間間距10像素 */
+}
+
+.message {
+    max-width: 70%; /* 最多寬70% */
+    padding: 10px 15px; /* 內距上下10像素，左右15像素 */
+    border-radius: 18px; /* 圓角18像素 */
+    font-size: 15px; /* 字體大小15像素 */
+}
+
+.message.sent {
+    align-self: flex-end; /* 靠右對齊 */
+    background: #0084ff; /* 藍色背景 */
+    color: white; /* 白色文字 */
+}
+
+.chat-input-area {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+}
+
+#msg-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    outline: none;
+}
+
+#send-msg-btn {
+    border: none;
+    background: none;
+    color: #0084ff;
+    font-size: 18px;
+    cursor: pointer;
+}
 
 /* 通知列表樣式 */
-.notification-list { background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-.noti-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f0f2f5; }
-.noti-content { margin-left: 15px; }
-.noti-time { font-size: 12px; color: #888; display: block; margin-top: 3px; }
+.notification-list {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.noti-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.noti-content {
+    margin-left: 15px;
+}
+
+.noti-time {
+    font-size: 12px;
+    color: #888;
+    display: block;
+    margin-top: 3px;
+}
 
 /* Modal */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 100; }
-.modal.show { display: flex; }
-.modal-content { background: #fff; width: 90%; max-width: 500px; padding: 20px; border-radius: 12px; }
-.modal-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-.close-btn { border: none; background: none; font-size: 24px; cursor: pointer; }
-textarea { width: 100%; height: 100px; border: none; outline: none; resize: none; font-size: 16px; }
-.modal-actions { display: flex; justify-content: space-between; margin-top: 15px; }
-.post-btn { background: #1877f2; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
-.fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #1877f2; color: white; border-radius: 50%; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 90; }
-.hidden { display: none; }
-#image-preview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; }
-.right-sidebar { flex: 0.5; }
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 16px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.post-btn {
+    background: #1877f2;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #1877f2;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 90;
+}
+/* 右下角＋按鈕：
+永遠固定在右下角（position: fixed）
+藍色圓形，有陰影，看起來會浮起來
+
+ */
+
+.hidden {
+    display: none;
+}
+
+#image-preview {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.right-sidebar {
+    flex: 0.5;
+}
 
 /* ============================
    NEW: 彈出通知卡片 (Toast) 樣式
@@ -65,26 +390,35 @@ textarea { width: 100%; height: 100px; border: none; outline: none; resize: none
 .toast-container {
     position: fixed;
     bottom: 30px;
-    right: 100px; /* 避開 FAB 按鈕 */
+    right: 100px;
+    /* 避開 FAB 按鈕 */
     display: flex;
     flex-direction: column;
     gap: 15px;
     z-index: 200;
 }
+/* 通知小卡片要堆疊在右下角，但比＋按鈕更高（z-index:200）
 
+ */
 .toast-card {
     background-color: white;
     width: 300px;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: flex-start;
     animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 3.5s forwards;
-    border-left: 5px solid #1877f2; /* 裝飾邊條 */
+    border-left: 5px solid #1877f2;
+    /* 裝飾邊條 */
     position: relative;
     overflow: hidden;
 }
+/* 每張通知卡片：白色、圓角、有陰影
+左邊一條藍色粗線
+會先滑進來（slideIn），3.5秒後淡出消失（fadeOut）
+
+ */
 
 .toast-icon {
     margin-right: 12px;
@@ -106,11 +440,29 @@ textarea { width: 100%; height: 100px; border: none; outline: none; resize: none
 
 /* 定義動畫 */
 @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 
-@keyframes fadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-20px); }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
+/* slideIn：從右邊外面「咻～」滑進來 */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+/* 
+fadeOut：慢慢變透明並往上飄走
+
+ */
