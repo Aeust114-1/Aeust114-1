@@ -238,130 +238,130 @@ body {
 }
 
 .chat-input-area {
-    padding: 15px;
-    border-top: 1px solid #eee;
-    display: flex;
+    padding: 15px; /* 內距15像素 */
+    border-top: 1px solid #eee;  /* 頂部有淡淡的分隔線 */
+    display: flex; /* 彈性布局 */
 }
 
 #msg-input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    margin-right: 10px;
-    outline: none;
+    flex: 1; /* 彈性寬度 */
+    padding: 10px; /* 內距10像素 */
+    border-radius: 20px; /* 圓角20像素 */
+    border: 1px solid #ddd; /* 淡淡的邊框 */
+    margin-right: 10px; /* 右邊外距10像素 */
+    outline: none; /* 取消聚焦邊框 */
 }
 
 #send-msg-btn {
-    border: none;
-    background: none;
-    color: #0084ff;
-    font-size: 18px;
-    cursor: pointer;
+    border: none; /* 取消按鈕預設樣式 */
+    background: none; /* 取消按鈕預設樣式 */ 
+    color: #0084ff; /* 藍色文字 */
+    font-size: 18px; /* 字體大小18像素 */
+    cursor: pointer; /* 滑鼠變手指 */
 }
 
 /* 通知列表樣式 */
 .notification-list {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    background: #fff; /* 白色背景 */
+    border-radius: 8px; /* 圓角8像素 */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* 淡淡的陰影 */
 }
 
 .noti-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #f0f2f5;
+    display: flex; /* 彈性布局 */
+    align-items: center; /* 垂直置中 */
+    padding: 15px; /* 內距15像素 */
+    border-bottom: 1px solid #f0f2f5; /* 底部有淡淡的分隔線 */
 }
 
-.noti-content {
-    margin-left: 15px;
+.noti-content { 
+    margin-left: 15px; /* 左邊外距15像素 */
 }
 
 .noti-time {
-    font-size: 12px;
-    color: #888;
-    display: block;
-    margin-top: 3px;
+    font-size: 12px; /* 字體大小12像素 */
+    color: #888; /* 淺灰色文字 */
+    display: block; /* 占滿一行 */
+    margin-top: 3px; /* 上方外距3像素 */
 }
 
 /* Modal */
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
+    display: none; /* 預設不顯示 */
+    position: fixed; /* 固定定位 */
+    top: 0;  /* 從左上角開始 */
+    left: 0; /* 從左上角開始 */
+    width: 100%; /* 寬度100% */
+    height: 100%; /* 高度100% */
+    background: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+    z-index: 100; /* 蓋在最上層 */
 }
 
 .modal.show {
-    display: flex;
+    display: flex; /* 顯示並使用彈性布局置中內容 */
 }
 
 .modal-content {
-    background: #fff;
-    width: 90%;
-    max-width: 500px;
-    padding: 20px;
-    border-radius: 12px;
+    background: #fff; /* 白色背景 */
+    width: 90%; /* 寬度90% */
+    max-width: 500px; /* 最多寬500像素 */
+    padding: 20px; /* 內距20像素 */
+    border-radius: 12px; /* 圓角12像素 */
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+    display: flex; /* 彈性布局 */
+    justify-content: space-between; /* 左右兩邊對齊 */
+    margin-bottom: 15px; /* 底部外距15像素 */
 }
 
 .close-btn {
-    border: none;
-    background: none;
-    font-size: 24px;
-    cursor: pointer;
+    border: none; /* 取消按鈕預設樣式 */
+    background: none; /* 取消按鈕預設樣式 */
+    font-size: 24px; /* 字體大小24像素 */
+    cursor: pointer; /* 滑鼠變手指 */
 }
 
 textarea {
-    width: 100%;
-    height: 100px;
-    border: none;
-    outline: none;
-    resize: none;
-    font-size: 16px;
+    width: 100%; /* 寬度100% */
+    height: 100px; /* 高度100像素 */
+    border: none; /* 取消邊框 */
+    outline: none; /* 取消聚焦邊框 */
+    resize: none; /* 不能調整大小 */
+    font-size: 16px; /* 字體大小16像素 */
 }
 
 .modal-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
+    display: flex; /* 彈性布局 */
+    justify-content: space-between; /* 左右兩邊對齊 */
+    margin-top: 15px; /* 頂部外距15像素 */
 }
 
 .post-btn {
-    background: #1877f2;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    cursor: pointer;
+    background: #1877f2; /* 藍色背景 */
+    color: white; /* 白色文字 */
+    border: none; /* 取消按鈕預設樣式 */
+    padding: 8px 20px; /* 內距上下8像素，左右20像素 */
+    border-radius: 20px; /* 圓角20像素 */
+    cursor: pointer; /* 滑鼠變手指 */
 }
 
 .fab {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    background: #1877f2;
-    color: white;
-    border-radius: 50%;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 90;
+    position: fixed; /* 永遠固定在螢幕上 */
+    bottom: 30px; /* 離底部30像素 */
+    right: 30px;  /* 離右邊30像素 */
+    width: 60px; /* 固定寬60像素 */
+    height: 60px; /* 固定高60像素 */
+    background: #1877f2; /* 藍色背景 */
+    color: white; /* 白色文字 */
+    border-radius: 50%; /* 圓形 */
+    border: none; /* 取消按鈕預設樣式 */
+    font-size: 24px; /* 字體大小24像素 */
+    cursor: pointer; /* 滑鼠變手指 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 陰影效果 */
+    z-index: 90; /* 蓋在大部分元素上面 */
 }
 /* 右下角＋按鈕：
 永遠固定在右下角（position: fixed）
@@ -370,49 +370,49 @@ textarea {
  */
 
 .hidden {
-    display: none;
+    display: none; /* 隱藏元素 */
 }
 
 #image-preview {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
+    width: 100%; /* 寬度100% */
+    max-height: 200px; /* 最多高200像素 */
+    object-fit: cover; /* 物件適應覆蓋 */
+    border-radius: 8px; /* 圓角8像素 */
 }
 
 .right-sidebar {
-    flex: 0.5;
+    flex: 0.5; /* 彈性寬度0.5 */
 }
 
 /* ============================
    NEW: 彈出通知卡片 (Toast) 樣式
    ============================ */
 .toast-container {
-    position: fixed;
-    bottom: 30px;
-    right: 100px;
+    position: fixed; /* 固定定位 */
+    bottom: 30px; /* 離底部30像素 */
+    right: 100px; /* 離右邊100像素 */
     /* 避開 FAB 按鈕 */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 200;
+    display: flex; /* 彈性布局 */
+    flex-direction: column; /* 垂直排列 */
+    gap: 15px; /* 項目之間間距15像素 */
+    z-index: 200; /* 蓋在＋按鈕上面 */
 }
 /* 通知小卡片要堆疊在右下角，但比＋按鈕更高（z-index:200）
 
  */
 .toast-card {
-    background-color: white;
-    width: 300px;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: flex-start;
-    animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 3.5s forwards;
-    border-left: 5px solid #1877f2;
+    background-color: white; /* 白色背景 */
+    width: 300px; /* 固定寬300像素 */
+    padding: 15px; /* 內距15像素 */
+    border-radius: 10px; /* 圓角10像素 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 陰影 */
+    display: flex; /* 彈性布局 */
+    align-items: flex-start; /* 頂端對齊 */
+    animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 3.5s forwards;     /* 先滑進來，3.5秒後淡出 */
+    border-left: 5px solid #1877f2; 
     /* 裝飾邊條 */
-    position: relative;
-    overflow: hidden;
+    position: relative; /* 相對定位 */
+    overflow: hidden; /* 隱藏溢出部分 */
 }
 /* 每張通知卡片：白色、圓角、有陰影
 左邊一條藍色粗線
@@ -421,45 +421,45 @@ textarea {
  */
 
 .toast-icon {
-    margin-right: 12px;
-    color: #1877f2;
-    font-size: 20px;
-    margin-top: 2px;
+    margin-right: 12px; /* 右邊外距12像素 */
+    color: #1877f2; /* 藍色圖示 */
+    font-size: 20px; /* 字體大小20像素 */
+    margin-top: 2px; /* 頂部外距2像素 */
 }
 
 .toast-body h4 {
-    margin: 0 0 5px 0;
-    font-size: 16px;
+    margin: 0 0 5px 0; /* 上右下左外距 */
+    font-size: 16px; /* 字體大小16像素 */
 }
 
 .toast-body p {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
+    margin: 0; /* 取消外距 */
+    font-size: 14px; /* 字體大小14像素 */
+    color: #555; /* 深灰色文字 */
 }
 
 /* 定義動畫 */
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
+@keyframes slideIn { 
+    from { 
+        transform: translateX(100%); /* 從右邊外面開始 */
+        opacity: 0; /* 透明度0 */
     }
 
     to {
-        transform: translateX(0);
-        opacity: 1;
+        transform: translateX(0); /* 移動到原本位置 */
+        opacity: 1; /* 透明度1 */
     }
 }
 /* slideIn：從右邊外面「咻～」滑進來 */
 @keyframes fadeOut {
     from {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 1; /* 透明度1 */
+        transform: translateY(0); /* 原本位置 */
     }
 
     to {
-        opacity: 0;
-        transform: translateY(-20px);
+        opacity: 0; /* 透明度0 */
+        transform: translateY(-20px); /* 往上飄走20像素 */
     }
 }
 /* 
