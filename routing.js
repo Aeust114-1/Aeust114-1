@@ -56,7 +56,7 @@ if (req.url.endsWith('.css') || req.url.endsWith('.js') || req.url.endsWith('.pn
 
     fs.readFile(staticFilePath, (err, content) => {
       if (err) {
-        const index3ErrPath = './weather/weather.ejs';
+        const index3ErrPath = './weberror/index3.ejs';
         fs.readFile(index3ErrPath, 'utf8', (errEjs, template) => { 
           if (errEjs) { 
             console.error('讀取失敗:', errEjs);
