@@ -9,7 +9,7 @@ http.createServer((req, res) => {
 
 switch (req.url) { 
     case '/':
-      filePath = '/threas.ejs';
+      filePath = '/views/login.ejs';
       break;
     case '/weather/weather.ejs':
       filePath = '/weather/weather.ejs';

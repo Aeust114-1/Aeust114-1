@@ -1,0 +1,171 @@
+/* =========================================
+   1. 全局重置 (Reset) 與 基礎設定
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 讓 border 和 padding 含在寬度內，不會撐破版面 */
+}
+
+body {
+    /* 設定字體：優先使用 Noto Sans TC (黑體)，沒有的話用系統預設 */
+    font-family: 'Noto Sans TC', sans-serif;
+    
+    /* --- 背景設定 --- */
+    background-color: #f3f4f6; /* 淺灰藍色背景，比純白不刺眼 */
+    
+    /* --- 絕對置中大法 (Flexbox) --- */
+    display: flex;             /* 啟用彈性盒模型 */
+    justify-content: center;   /* 主軸 (水平) 置中 */
+    align-items: center;       /* 次軸 (垂直) 置中 */
+    min-height: 100vh;         /* 最小高度為視窗高度的 100%，確保內容垂直置中 */
+    
+    position: relative;        /* 為了讓背景裝飾圓圈定位 */
+    overflow: hidden;          /* 防止裝飾圓圈超出畫面出現捲軸 */
+}
+
+/* =========================================
+   2. 背景裝飾 (增加現代感)
+   ========================================= */
+.circle {
+    position: absolute;        /* 絕對定位，不受排版影響，隨意擺放 */
+    border-radius: 50%;        /* 50% 讓方形變成正圓形 */
+    opacity: 0.6;              /* 透明度 60% */
+    z-index: -1;               /* 放在內容後面 */
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    background-color: #dbeafe; /* 淺藍色 */
+    top: -50px;                /* 往上移出一點 */
+    left: -50px;               /* 往左移出一點 */
+}
+
+.circle-2 {
+    width: 200px;
+    height: 200px;
+    background-color: #e0e7ff; /* 淺紫色 */
+    bottom: -20px;
+    right: -20px;
+}
+
+/* =========================================
+   3. 登入卡片主體 (Card Design)
+   ========================================= */
+.login-card {
+    background: rgba(255, 255, 255, 0.95); /* 白色背景，微微透光 (玻璃質感) */
+    width: 100%;
+    max-width: 400px;          /* 卡片最大寬度，避免在大螢幕太寬 */
+    padding: 40px;             /* 內距：內容離邊框的距離 */
+    border-radius: 20px;       /* 大圓角，看起來比較親切現代 */
+    
+    /* --- 陰影效果 (讓卡片浮起來) --- */
+    /* x偏移 y偏移 模糊半徑 擴散半徑 顏色 */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
+    
+    /* --- 毛玻璃特效 (部分瀏覽器支援) --- */
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.5); /* 淡淡的白邊框 */
+}
+
+/* =========================================
+   4. 標題區域
+   ========================================= */
+.card-header {
+    text-align: center;        /* 文字置中 */
+    margin-bottom: 30px;       /* 與下方表單的距離 */
+}
+
+.card-header h1 {
+    font-size: 24px;
+    color: #1f2937;            /* 深灰黑色，比純黑柔和 */
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.card-header p {
+    font-size: 14px;
+    color: #6b7280;            /* 次要文字用灰色 */
+}
+
+/* =========================================
+   5. 表單輸入框樣式
+   ========================================= */
+.form-group {
+    margin-bottom: 20px;       /* 每個輸入框組的間距 */
+}
+
+.form-group label {
+    display: block;            /* 獨佔一行 */
+    margin-bottom: 8px;        /* 標籤與輸入框的距離 */
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;               /* 填滿父容器 */
+    padding: 12px 16px;        /* 輸入框內部空間：上下12px 左右16px */
+    font-size: 15px;
+    border: 1px solid #e5e7eb; /* 預設邊框：淺灰 */
+    border-radius: 10px;       /* 輸入框圓角 */
+    background-color: #f9fafb; /* 輸入框背景微灰 */
+    transition: all 0.3s ease; /* 所有變化都加上 0.3秒過渡動畫 */
+}
+
+/* --- 重點：輸入框被點擊時 (Focus) --- */
+.form-group input:focus {
+    outline: none;             /* 移除預設醜醜的藍框 */
+    border-color: #3b82f6;     /* 邊框變亮藍色 */
+    background-color: #fff;    /* 背景變全白 */
+    /* 加上一圈藍色光暈 */
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); 
+}
+
+/* =========================================
+   6. 按鈕樣式 (Button)
+   ========================================= */
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background-color: #2563eb; /* 漂亮的寶藍色 */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;           /* 滑鼠變手指 */
+    transition: background-color 0.2s; /* 背景色變化動畫 */
+    margin-top: 10px;          /* 與上方輸入框的距離 */
+}
+
+/* 滑鼠移過去的效果 */
+.btn-login:hover {
+    background-color: #1d4ed8; /* 變深一點的藍色 */
+}
+
+/* 按鈕按下去的效果 */
+.btn-login:active {
+    transform: scale(0.98);    /* 微微縮小，產生按壓感 */
+}
+
+/* =========================================
+   7. 底部連結
+   ========================================= */
+.form-footer {
+    margin-top: 20px;
+    display: flex;             /* 使用 Flexbox 排版 */
+    justify-content: space-between; /* 左右分開對齊 */
+    font-size: 13px;
+}
+
+.form-footer a {
+    text-decoration: none;     /* 去除底線 */
+    color: #6b7280;            /* 灰色文字 */
+    transition: color 0.2s;
+}
+
+.form-footer a:hover {
+    color: #2563eb;            /* 滑鼠移上去變藍色 */
+}
