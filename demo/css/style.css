@@ -1,0 +1,312 @@
+/* --- 1. 全局變數與重置 (Setup & Variables) --- */
+:root {
+    /* 定義圖像中的核心顏色 */
+    --bg-dark: #050510;       /* 極深藍背景 */
+    --card-bg: #121225;       /* 卡片背景 */
+    --primary-neon: #00f3ff;  /* 青色霓虹 (Cyan) */
+    --secondary-neon: #b026ff;/* 紫色霓虹 (Purple) */
+    --text-main: #ffffff;     /* 主要文字白 */
+    --text-muted: #a0a0b0;    /* 次要文字灰 */
+    --glow-spread: 0 0 10px;  /* 光暈效果預設值 */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-main);
+}
+
+/* --- 主應用容器 (模擬螢幕區域) --- */
+.app-container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: var(--bg-dark);
+    border-radius: 20px;
+    padding: 20px;
+    /* 給整個容器一個邊框光暈，更有科技感 */
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1); 
+    border: 1px solid #333;
+}
+
+/* --- 2. 企業橫幅 (Header/Banner) --- */
+.corporate-banner {
+    position: relative;
+    height: 180px;
+    border-radius: 12px;
+    /* 使用漸層模擬城市霓虹背景 */
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    border: 2px solid var(--primary-neon);
+    box-shadow: var(--glow-spread) var(--primary-neon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* 模擬橫幅內的 Logo 區域 */
+.banner-content {
+    text-align: center;
+    z-index: 2; /* 確保文字在背景之上 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    font-size: 3rem;
+    color: var(--primary-neon);
+    text-shadow: 0 0 15px var(--primary-neon);
+}
+
+.logo-text h1 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0;
+}
+.logo-text h2 {
+    font-size: 1.2rem;
+    color: var(--secondary-neon);
+    font-weight: 300;
+}
+
+/* --- 3. 導航欄 (Navigation) --- */
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.nav-item {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--secondary-neon);
+    color: var(--text-main);
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-item i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.nav-item span {
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* 導航欄懸停與激活狀態 (模擬高對比) */
+.nav-item:hover, .nav-item.active {
+    background: rgba(176, 38, 255, 0.1); /* 紫色半透明背景 */
+    box-shadow: 0 0 15px var(--secondary-neon);
+    border-color: var(--primary-neon);
+}
+.nav-item.active i {
+    color: var(--primary-neon);
+}
+
+/* --- 4. 主內容佈局 (Main Layout) --- */
+.content-area {
+    display: flex;
+    gap: 20px;
+    min-height: 400px;
+}
+
+/* 左側過濾欄 */
+.sidebar-filter {
+    width: 200px;
+    padding: 10px;
+}
+
+.sidebar-filter h3 {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* 自定義 Checkbox 樣式 */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* 創建自定義的 checkbox 方塊 */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: transparent;
+    border: 1px solid var(--text-muted);
+    border-radius: 3px;
+}
+
+/* 當 checkbox 被選中時的樣式 */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary-neon);
+    border-color: var(--primary-neon);
+    box-shadow: 0 0 5px var(--primary-neon);
+}
+
+/* --- 5. 網格卡片區域 (Grid System) --- */
+.grid-container {
+    flex: 1;
+    display: grid;
+    /* 自動適應列數：模仿圖中的 4 列佈局 */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 20px;
+}
+
+.card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+    border: 1px solid var(--secondary-neon);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s;
+    /* 卡片周圍的微弱紫光 */
+    box-shadow: 0 0 5px rgba(176, 38, 255, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px var(--secondary-neon);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.card h4 {
+    margin-bottom: 10px;
+    color: white;
+}
+
+.card p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.4;
+    flex-grow: 1; /* 確保按鈕對齊底部 */
+}
+
+/* Learn More 按鈕 */
+.btn-learn-more {
+    background: transparent;
+    border: 1px solid var(--primary-neon);
+    color: var(--primary-neon);
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-learn-more:hover {
+    background: var(--primary-neon);
+    color: #000;
+    box-shadow: 0 0 10px var(--primary-neon);
+}
+
+/* --- 6. 頁尾 (Footer) --- */
+.app-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    font-size: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-right: 20px;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-neon);
+}
+
+/* 無障礙開關樣式 */
+.accessibility-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Toggle Switch CSS */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: var(--primary-neon);
+}
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
