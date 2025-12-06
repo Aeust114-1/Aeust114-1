@@ -1,13 +1,14 @@
-/* --- 1. 全局變數與重置 (Setup & Variables) --- */
+/* --- 1. 全局變數與重置 --- */
 :root {
-    /* 定義圖像中的核心顏色 */
-    --bg-dark: #050510;       /* 極深藍背景 */
-    --card-bg: #121225;       /* 卡片背景 */
-    --primary-neon: #00f3ff;  /* 青色霓虹 (Cyan) */
-    --secondary-neon: #b026ff;/* 紫色霓虹 (Purple) */
-    --text-main: #ffffff;     /* 主要文字白 */
-    --text-muted: #a0a0b0;    /* 次要文字灰 */
-    --glow-spread: 0 0 10px;  /* 光暈效果預設值 */
+    --bg-dark: #050510;
+    --card-bg: #121225;
+    --primary-neon: #00f3ff;
+    --secondary-neon: #b026ff;
+    --success-color: #00ff9d;
+    --warning-color: #ff4d4d;
+    --text-main: #ffffff;
+    --text-muted: #a0a0b0;
+    --glow-spread: 0 0 10px;
 }
 
 * {
@@ -26,24 +27,21 @@ body {
     color: var(--text-main);
 }
 
-/* --- 主應用容器 (模擬螢幕區域) --- */
 .app-container {
     width: 90%;
     max-width: 1200px;
     background-color: var(--bg-dark);
     border-radius: 20px;
     padding: 20px;
-    /* 給整個容器一個邊框光暈，更有科技感 */
     box-shadow: 0 0 20px rgba(0, 243, 255, 0.1); 
     border: 1px solid #333;
 }
 
-/* --- 2. 企業橫幅 (Header/Banner) --- */
+/* --- 2. 企業橫幅 --- */
 .corporate-banner {
     position: relative;
-    height: 180px;
+    height: 150px;
     border-radius: 12px;
-    /* 使用漸層模擬城市霓虹背景 */
     background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     border: 2px solid var(--primary-neon);
     box-shadow: var(--glow-spread) var(--primary-neon);
@@ -52,36 +50,38 @@ body {
     justify-content: center;
     margin-bottom: 20px;
     overflow: hidden;
+    transition: all 0.5s ease;
 }
 
-/* 模擬橫幅內的 Logo 區域 */
 .banner-content {
     text-align: center;
-    z-index: 2; /* 確保文字在背景之上 */
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 .logo-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--primary-neon);
     text-shadow: 0 0 15px var(--primary-neon);
+    transition: transform 0.3s;
 }
 
 .logo-text h1 {
     font-size: 1.5rem;
     letter-spacing: 2px;
-    margin-bottom: 0;
+    margin: 0;
 }
 .logo-text h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--secondary-neon);
     font-weight: 300;
+    letter-spacing: 4px;
 }
 
-/* --- 3. 導航欄 (Navigation) --- */
+/* --- 3. 導航欄 --- */
 .main-nav {
     display: flex;
     justify-content: space-between;
@@ -94,7 +94,7 @@ body {
     background: transparent;
     border: 1px solid var(--secondary-neon);
     color: var(--text-main);
-    padding: 15px;
+    padding: 12px;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
@@ -104,28 +104,17 @@ body {
     transition: all 0.3s ease;
 }
 
-.nav-item i {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-}
+.nav-item i { font-size: 1.4rem; margin-bottom: 2px; }
+.nav-item span { font-size: 0.9rem; font-weight: bold; }
 
-.nav-item span {
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-/* 導航欄懸停與激活狀態 (模擬高對比) */
 .nav-item:hover, .nav-item.active {
-    background: rgba(176, 38, 255, 0.1); /* 紫色半透明背景 */
+    background: rgba(176, 38, 255, 0.15);
     box-shadow: 0 0 15px var(--secondary-neon);
     border-color: var(--primary-neon);
 }
-.nav-item.active i {
-    color: var(--primary-neon);
-}
+.nav-item.active i { color: var(--primary-neon); }
 
-/* --- 4. 主內容佈局 (Main Layout) --- */
+/* --- 4. 內容佈局架構 --- */
 .content-area {
     display: flex;
     gap: 20px;
@@ -135,18 +124,27 @@ body {
 /* 左側過濾欄 */
 .sidebar-filter {
     width: 200px;
-    padding: 10px;
+    border-right: 1px solid #333;
+    padding-right: 15px;
 }
-
 .sidebar-filter h3 {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #444;
     padding-bottom: 10px;
     margin-bottom: 20px;
+    font-size: 1rem;
 }
 
-/* 自定義 Checkbox 樣式 */
+/* 篩選群組樣式 */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+/* 預設隱藏所有 filter-group，透過 JS 控制顯示 */
+/* 注意：這在 HTML 內聯樣式中已經處理，但 CSS 保底 */
+
+/* 自定義 Checkbox/Radio 樣式 */
 .checkbox-container {
     display: block;
     position: relative;
@@ -155,46 +153,54 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     color: var(--text-muted);
-    user-select: none;
+    transition: color 0.3s;
 }
-
-.checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+.checkbox-container:hover {
+    color: var(--text-main);
 }
+.checkbox-container input { position: absolute; opacity: 0; }
 
-/* 創建自定義的 checkbox 方塊 */
+/* 方塊/圓圈樣式 */
 .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 18px;
-    width: 18px;
-    background-color: transparent;
-    border: 1px solid var(--text-muted);
-    border-radius: 3px;
+    position: absolute; top: 0; left: 0; height: 18px; width: 18px;
+    border: 1px solid var(--text-muted); 
+    border-radius: 50%; /* 改成圓形表示單選 */
+    transition: all 0.3s;
 }
 
-/* 當 checkbox 被選中時的樣式 */
+/* 選中狀態 */
 .checkbox-container input:checked ~ .checkmark {
     background-color: var(--primary-neon);
     border-color: var(--primary-neon);
-    box-shadow: 0 0 5px var(--primary-neon);
+    box-shadow: 0 0 8px var(--primary-neon);
 }
 
-/* --- 5. 網格卡片區域 (Grid System) --- */
-.grid-container {
+/* --- 5. 視圖與卡片樣式 --- */
+.views-container {
     flex: 1;
+    position: relative;
+}
+
+.view-section {
+    width: 100%;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Style A: Grid Container */
+.grid-container {
     display: grid;
-    /* 自動適應列數：模仿圖中的 4 列佈局 */
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 20px;
 }
 
 .card {
     background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-    border: 1px solid var(--secondary-neon);
+    border: 1px solid #333;
     border-radius: 12px;
     padding: 20px;
     display: flex;
@@ -202,53 +208,98 @@ body {
     align-items: center;
     text-align: center;
     transition: transform 0.3s;
-    /* 卡片周圍的微弱紫光 */
-    box-shadow: 0 0 5px rgba(176, 38, 255, 0.3);
 }
-
 .card:hover {
+    border-color: var(--primary-neon);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
     transform: translateY(-5px);
-    box-shadow: 0 0 15px var(--secondary-neon);
 }
-
-.card-icon {
-    font-size: 2.5rem;
-    color: var(--text-muted);
-    margin-bottom: 15px;
-}
-
-.card h4 {
-    margin-bottom: 10px;
-    color: white;
-}
-
-.card p {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    line-height: 1.4;
-    flex-grow: 1; /* 確保按鈕對齊底部 */
-}
-
-/* Learn More 按鈕 */
+.card-icon { font-size: 2rem; color: var(--text-muted); margin-bottom: 15px; }
+.card h4 { margin-bottom: 10px; }
+.card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; flex-grow: 1; }
 .btn-learn-more {
-    background: transparent;
-    border: 1px solid var(--primary-neon);
-    color: var(--primary-neon);
-    padding: 8px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s;
+    background: transparent; border: 1px solid var(--primary-neon); color: var(--primary-neon);
+    padding: 5px 15px; border-radius: 15px; cursor: pointer; transition: 0.3s;
 }
+.btn-learn-more:hover { background: var(--primary-neon); color: #000; }
 
-.btn-learn-more:hover {
+/* Style B: List Container */
+.list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.list-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 10px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-bottom: 1px solid #444;
+}
+.list-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 15px;
+    background: rgba(255,255,255,0.02);
+    border-left: 3px solid transparent;
+    align-items: center;
+    border-radius: 0 5px 5px 0;
+}
+.list-item:hover { background: rgba(255,255,255,0.05); }
+.list-item.warning { border-left-color: var(--warning-color); }
+.list-item.success { border-left-color: var(--success-color); }
+.level-high { color: var(--warning-color); font-weight: bold; }
+.level-low { color: var(--success-color); }
+
+/* Style C: Stats Container */
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.stat-box {
+    background: rgba(18, 18, 37, 0.5);
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 10px;
+}
+.stat-box h4 { margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted); }
+.progress-bar-bg {
+    height: 10px;
+    background: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+.progress-bar-fill {
+    height: 100%;
     background: var(--primary-neon);
-    color: #000;
     box-shadow: 0 0 10px var(--primary-neon);
+    transition: width 1s ease;
 }
+.progress-bar-fill.color-purple { background: var(--secondary-neon); box-shadow: 0 0 10px var(--secondary-neon); }
+.progress-bar-fill.color-green { background: var(--success-color); box-shadow: 0 0 10px var(--success-color); }
+.stat-value { float: right; font-size: 0.9rem; font-family: monospace; }
 
-/* --- 6. 頁尾 (Footer) --- */
+/* Style D: Feature Container */
+.feature-container {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, rgba(0,255,157,0.05) 0%, transparent 100%);
+    border: 1px solid var(--success-color);
+    border-radius: 12px;
+    padding: 40px;
+    gap: 40px;
+}
+.feature-text h3 { color: var(--success-color); margin-bottom: 15px; font-size: 1.5rem; }
+.feature-text p { line-height: 1.6; color: var(--text-muted); margin-bottom: 20px; }
+.feature-text ul { list-style: none; }
+.feature-text ul li { margin-bottom: 10px; color: #fff; }
+.feature-text ul li i { color: var(--success-color); margin-right: 10px; }
+.feature-graphic i { font-size: 8rem; color: var(--success-color); opacity: 0.8; text-shadow: 0 0 30px var(--success-color); }
+
+/* --- 6. 頁尾 --- */
 .app-footer {
     margin-top: 30px;
     display: flex;
@@ -258,55 +309,13 @@ body {
     padding-top: 20px;
     font-size: 0.8rem;
 }
+.footer-links a { color: var(--text-muted); text-decoration: none; margin-right: 20px; transition: color 0.2s; }
+.footer-links a:hover { color: var(--primary-neon); }
 
-.footer-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-right: 20px;
-    transition: color 0.2s;
-}
-
-.footer-links a:hover {
-    color: var(--primary-neon);
-}
-
-/* 無障礙開關樣式 */
-.accessibility-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Toggle Switch CSS */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 20px;
-}
+.accessibility-controls { display: flex; align-items: center; gap: 10px; }
+.switch { position: relative; display: inline-block; width: 40px; height: 20px; }
 .switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 20px;
-}
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-input:checked + .slider {
-    background-color: var(--primary-neon);
-}
-input:checked + .slider:before {
-    transform: translateX(20px);
-}
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .4s; border-radius: 20px; }
+.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary-neon); }
+input:checked + .slider:before { transform: translateX(20px); }
