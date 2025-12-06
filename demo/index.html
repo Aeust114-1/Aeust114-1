@@ -49,67 +49,56 @@
                 <form id="filter-ai" class="filter-group active">
                     <label class="checkbox-container">
                         <input type="radio" name="ai-filter" value="all" checked>
-                        <span class="checkmark"></span>
-                        全部項目
+                        <span class="checkmark"></span> 全部項目
                     </label>
                     <label class="checkbox-container">
                         <input type="radio" name="ai-filter" value="analysis">
-                        <span class="checkmark"></span>
-                        數據分析
+                        <span class="checkmark"></span> 數據分析
                     </label>
                     <label class="checkbox-container">
                         <input type="radio" name="ai-filter" value="vision">
-                        <span class="checkmark"></span>
-                        視覺辨識
+                        <span class="checkmark"></span> 視覺辨識
                     </label>
                 </form>
 
                 <form id="filter-sec" class="filter-group" style="display: none;">
                     <label class="checkbox-container">
                         <input type="radio" name="sec-filter" value="all" checked>
-                        <span class="checkmark"></span>
-                        所有紀錄
+                        <span class="checkmark"></span> 所有紀錄
                     </label>
                     <label class="checkbox-container">
                         <input type="radio" name="sec-filter" value="warning">
-                        <span class="checkmark"></span>
-                        僅顯示警告
+                        <span class="checkmark"></span> 僅顯示警告
                     </label>
                     <label class="checkbox-container">
                         <input type="radio" name="sec-filter" value="normal">
-                        <span class="checkmark"></span>
-                        正常紀錄
+                        <span class="checkmark"></span> 正常紀錄
                     </label>
                 </form>
 
                 <form id="filter-cloud" class="filter-group" style="display: none;">
                     <label class="checkbox-container">
                         <input type="radio" name="cloud-filter" value="all" checked>
-                        <span class="checkmark"></span>
-                        整體監控
+                        <span class="checkmark"></span> 整體監控
                     </label>
                     <label class="checkbox-container">
                         <input type="radio" name="cloud-filter" value="server">
-                        <span class="checkmark"></span>
-                        伺服器資源
+                        <span class="checkmark"></span> 伺服器資源
                     </label>
                     <label class="checkbox-container">
                         <input type="radio" name="cloud-filter" value="db">
-                        <span class="checkmark"></span>
-                        資料庫
+                        <span class="checkmark"></span> 資料庫
                     </label>
                 </form>
 
                 <form id="filter-eco" class="filter-group" style="display: none;">
                     <label class="checkbox-container">
                         <input type="radio" name="eco-filter" value="all" checked>
-                        <span class="checkmark"></span>
-                        全部計畫
+                        <span class="checkmark"></span> 全部計畫
                     </label>
                     <label class="checkbox-container">
                         <input type="radio" name="eco-filter" value="goal">
-                        <span class="checkmark"></span>
-                        核心目標
+                        <span class="checkmark"></span> 核心目標
                     </label>
                 </form>
             </aside>
@@ -117,116 +106,29 @@
             <div class="views-container">
                 
                 <section id="section-ai" class="view-section active">
-                    <div class="grid-container">
-                        <article class="card filter-item" data-category="analysis">
-                            <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
-                            <h4>機器學習</h4>
-                            <p>自動化數據分析模型與預測。</p>
-                            <button class="btn-learn-more">詳情</button>
-                        </article>
-                        <article class="card filter-item" data-category="analysis">
-                            <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
-                            <h4>神經網絡</h4>
-                            <p>模擬人腦運作的深度運算架構。</p>
-                            <button class="btn-learn-more">詳情</button>
-                        </article>
-                        <article class="card filter-item" data-category="vision">
-                            <div class="card-icon"><i class="fa-solid fa-eye"></i></div>
-                            <h4>視覺辨識</h4>
-                            <p>高精度即時影像處理技術。</p>
-                            <button class="btn-learn-more">詳情</button>
-                        </article>
-                        <article class="card filter-item" data-category="vision">
-                            <div class="card-icon"><i class="fa-solid fa-video"></i></div>
-                            <h4>監控分析</h4>
-                            <p>即時串流影像分析與警示。</p>
-                            <button class="btn-learn-more">詳情</button>
-                        </article>
-                    </div>
+                    <div class="grid-container" id="container-ai">
+                        </div>
                 </section>
 
                 <section id="section-sec" class="view-section" style="display: none;">
-                    <div class="list-container">
+                    <div class="list-container" id="container-sec">
                         <div class="list-header">
                             <span>狀態</span>
                             <span>來源 IP</span>
                             <span>等級</span>
                             <span>時間</span>
                         </div>
-                        <div class="list-item filter-item warning" data-category="warning">
-                            <span class="status"><i class="fa-solid fa-triangle-exclamation"></i> 攔截</span>
-                            <span>192.168.1.105</span>
-                            <span class="level-high">高</span>
-                            <span>10:42:01</span>
                         </div>
-                        <div class="list-item filter-item success" data-category="normal">
-                            <span class="status"><i class="fa-solid fa-shield-halved"></i> 正常</span>
-                            <span>10.0.0.52</span>
-                            <span class="level-low">低</span>
-                            <span>10:40:15</span>
-                        </div>
-                        <div class="list-item filter-item success" data-category="normal">
-                            <span class="status"><i class="fa-solid fa-shield-halved"></i> 正常</span>
-                            <span>172.16.0.3</span>
-                            <span class="level-low">低</span>
-                            <span>10:38:22</span>
-                        </div>
-                         <div class="list-item filter-item warning" data-category="warning">
-                            <span class="status"><i class="fa-solid fa-triangle-exclamation"></i> 異常</span>
-                            <span>192.168.1.88</span>
-                            <span class="level-high">中</span>
-                            <span>10:35:10</span>
-                        </div>
-                    </div>
                 </section>
 
                 <section id="section-cloud" class="view-section" style="display: none;">
-                    <div class="stats-container">
-                        <div class="stat-box filter-item" data-category="server">
-                            <h4>伺服器負載 (US-East)</h4>
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar-fill" style="width: 75%;"></div>
-                            </div>
-                            <span class="stat-value">75%</span>
+                    <div class="stats-container" id="container-cloud">
                         </div>
-                        <div class="stat-box filter-item" data-category="server">
-                            <h4>記憶體使用率</h4>
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar-fill color-purple" style="width: 45%;"></div>
-                            </div>
-                            <span class="stat-value">45%</span>
-                        </div>
-                        <div class="stat-box filter-item" data-category="db">
-                            <h4>資料庫連線數 (SQL)</h4>
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar-fill color-green" style="width: 90%;"></div>
-                            </div>
-                            <span class="stat-value">920 / 1000</span>
-                        </div>
-                        <div class="stat-box filter-item" data-category="db">
-                            <h4>Redis 快取命中率</h4>
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar-fill color-green" style="width: 88%;"></div>
-                            </div>
-                            <span class="stat-value">88%</span>
-                        </div>
-                    </div>
                 </section>
 
                 <section id="section-eco" class="view-section" style="display: none;">
-                    <div class="feature-container filter-item" data-category="goal">
-                        <div class="feature-text">
-                            <h3>2025 淨零碳排目標</h3>
-                            <p>我們致力於將數據中心的能源效率提升 40%，並全面採用再生能源供電。</p>
-                            <ul>
-                                <li><i class="fa-solid fa-check"></i> 太陽能發電板覆蓋率 80%</li>
-                                <li><i class="fa-solid fa-check"></i> 智慧冷卻系統</li>
-                            </ul>
+                    <div class="feature-container-wrapper" id="container-eco">
                         </div>
-                        <div class="feature-graphic">
-                            <i class="fa-solid fa-seedling"></i>
-                        </div>
-                    </div>
                 </section>
 
             </div>
@@ -238,7 +140,6 @@
                 <a href="#">系統狀態</a>
                 <a href="#">聯絡支援</a>
             </div>
-            
             <div class="accessibility-controls">
                 <span>高對比模式</span>
                 <label class="switch">
