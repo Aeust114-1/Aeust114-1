@@ -1,64 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // ==========================================
-    // 第一部分：模擬 MySQL 資料庫回傳的 JSON 資料
-    // ==========================================
-    // 未來請使用 AJAX/Fetch 從您的 PHP/Node.js 後端獲取這些資料
+    // 第一部分：從後端 API 獲取資料
     // ==========================================
 
-    // 1. 來自 table: ai_projects
-    const mockAiData = [
-        { id: 1, title: '機器學習', description: '自動化數據分析模型與預測。', category: 'analysis', icon: 'fa-robot' },
-        { id: 2, title: '神經網絡', description: '模擬人腦運作的深度運算架構。', category: 'analysis', icon: 'fa-microchip' },
-        { id: 3, title: '視覺辨識', description: '高精度即時影像處理技術。', category: 'vision', icon: 'fa-eye' },
-        { id: 4, title: '監控分析', description: '即時串流影像分析與警示。', category: 'vision', icon: 'fa-video' }
-    ];
+    // 定義一個異步函數來載入所有資料
+    async function loadAllData() {
+        try {
+            // 修改重點：網址改成 http://localhost:3000/api
+            const API_URL = 'http://localhost:3000/api';
 
-    // 2. 來自 table: security_logs
-    const mockSecurityData = [
-        { id: 101, status_text: '攔截', status_type: 'warning', ip: '192.168.1.105', level: '高', time: '10:42:01', category: 'warning' },
-        { id: 102, status_text: '正常', status_type: 'success', ip: '10.0.0.52', level: '低', time: '10:40:15', category: 'normal' },
-        { id: 103, status_text: '正常', status_type: 'success', ip: '172.16.0.3', level: '低', time: '10:38:22', category: 'normal' },
-        { id: 104, status_text: '異常', status_type: 'warning', ip: '192.168.1.88', level: '中', time: '10:35:10', category: 'warning' }
-    ];
+            // 1. 呼叫 AI 資料 API
+            const aiResponse = await fetch(`${API_URL}?query=ai`);
+            const aiData = await aiResponse.json();
+            renderAI(aiData);
 
-    // 3. 來自 table: cloud_metrics
-    const mockCloudData = [
-        { id: 201, name: '伺服器負載 (US-East)', category: 'server', value: 75, max: 100, color: 'default' },
-        { id: 202, name: '記憶體使用率', category: 'server', value: 45, max: 100, color: 'purple' },
-        { id: 203, name: '資料庫連線數 (SQL)', category: 'db', value: 920, max: 1000, color: 'green' },
-        { id: 204, name: 'Redis 快取命中率', category: 'db', value: 88, max: 100, color: 'green' }
-    ];
+            // 2. 呼叫 資安 資料 API
+            const secResponse = await fetch(`${API_URL}?query=security`);
+            const secData = await secResponse.json();
+            renderSecurity(secData);
 
-    // 4. 來自 table: eco_initiatives
-    const mockEcoData = [
-        { 
-            id: 301, 
-            title: '2025 淨零碳排目標', 
-            description: '我們致力於將數據中心的能源效率提升 40%，並全面採用再生能源供電。', 
-            category: 'goal',
-            features: ['太陽能發電板覆蓋率 80%', '智慧冷卻系統'] // JSON 陣列
+            // 3. 呼叫 雲端 資料 API
+            const cloudResponse = await fetch(`${API_URL}?query=cloud`);
+            const cloudData = await cloudResponse.json();
+            renderCloud(cloudData);
+
+            // 4. 呼叫 永續 資料 API
+            const ecoResponse = await fetch(`${API_URL}?query=eco`);
+            const ecoData = await ecoResponse.json();
+            renderEco(ecoData);
+
+        } catch (error) {
+            console.error('資料載入失敗:', error);
+            // 貼心提示：如果是用 Node.js，錯誤通常是因為忘記啟動 server
+            // alert('無法連接到後端伺服器，請確認是否已執行 "node server.js"');
         }
-    ];
+    }
+
+    // 執行載入函數
+    loadAllData();
 
     // ==========================================
     // 第二部分：資料渲染邏輯 (Render Logic)
     // ==========================================
 
-    // 初始化：將模擬資料渲染到畫面上
-    // TODO: 未來在此處呼叫 fetch() API，成功後再執行 render 函數
-    renderAI(mockAiData);
-    renderSecurity(mockSecurityData);
-    renderCloud(mockCloudData);
-    renderEco(mockEcoData);
-
     /* --- 渲染函數 A: AI 卡片 --- */
     function renderAI(data) {
+        // ★★★ 這是新增的偵錯代碼 ★★★
+        console.log('【前端收到的 AI 資料】:', data);
+        
         const container = document.getElementById('container-ai');
+        if (!container) return; // 防止找不到元素報錯
+        
         container.innerHTML = ''; // 清空容器
+
+        // 如果資料是空的，顯示提示
+        if (data.length === 0) {
+            container.innerHTML = '<p style="color:white; padding:20px;">資料庫目前沒有 AI 專案資料</p>';
+            return;
+        }
 
         data.forEach(item => {
             // 建立 HTML 字串，動態帶入資料
+            // 注意：這裡使用的 item.title, item.description, item.icon 必須跟資料庫欄位一致
             const cardHtml = `
                 <article class="card filter-item" data-category="${item.category}">
                     <div class="card-icon"><i class="fa-solid ${item.icon}"></i></div>
@@ -75,6 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- 渲染函數 B: 資安列表 --- */
     function renderSecurity(data) {
         const container = document.getElementById('container-sec');
+        if (!container) return;
+
         // 保留表頭，只移除 .list-item
         const items = container.querySelectorAll('.list-item');
         items.forEach(el => el.remove());
@@ -99,6 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- 渲染函數 C: 雲端數據 --- */
     function renderCloud(data) {
         const container = document.getElementById('container-cloud');
+        if (!container) return;
+        
         container.innerHTML = '';
 
         data.forEach(item => {
@@ -125,11 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- 渲染函數 D: 永續特色 --- */
     function renderEco(data) {
         const container = document.getElementById('container-eco');
+        if (!container) return;
+
         container.innerHTML = '';
 
         data.forEach(item => {
             // 將 features 陣列轉為 li 標籤
-            const featuresList = item.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('');
+            // 如果 features 不是陣列 (例如資料庫存錯)，給一個預設空陣列避免報錯
+            const features = Array.isArray(item.features) ? item.features : [];
+            const featuresList = features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('');
 
             const featureHtml = `
                 <div class="feature-container filter-item" data-category="${item.category}">
@@ -174,9 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const newIconClass = this.getAttribute('data-icon');
 
             // 更新橫幅
-            bannerTitle.textContent = newTitle;
-            bannerSubtitle.textContent = newSubtitle;
-            bannerIcon.className = `fa-solid ${newIconClass} logo-icon`;
+            if(bannerTitle) bannerTitle.textContent = newTitle;
+            if(bannerSubtitle) bannerSubtitle.textContent = newSubtitle;
+            if(bannerIcon) bannerIcon.className = `fa-solid ${newIconClass} logo-icon`;
 
             // 切換區塊顯示
             sections.forEach(section => {
@@ -255,7 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. 無障礙開關 ---
     const accessToggle = document.getElementById('accessibility-toggle');
-    accessToggle.addEventListener('change', function() {
-        document.documentElement.style.filter = this.checked ? "contrast(1.3) saturate(1.2)" : "none";
-    });
+    if (accessToggle) {
+        accessToggle.addEventListener('change', function() {
+            document.documentElement.style.filter = this.checked ? "contrast(1.3) saturate(1.2)" : "none";
+        });
+    }
 });
