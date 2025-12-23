@@ -1,21 +1,22 @@
 // server.js
-const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
-const app = express();
-const port = 3000; // Node.js 伺服器通常運行在 3000 port
+function SQLerver() {
+    const express = require('express');
+    const mysql = require('mysql2');
+    const cors = require('cors');
+    const app = express();
+    const port = 3000; // Node.js 伺服器通常運行在 3000 port
 
-// 1. 啟用 CORS (允許前端網頁存取這個後端)
-app.use(cors());
+    // 1. 啟用 CORS (允許前端網頁存取這個後端)
+    app.use(cors());
 
-// 2. 設定資料庫連線
-// 請將這裡的資訊改成你自己的 MySQL 設定
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',      // 你的 MySQL 帳號
-    password: '',      // 你的 MySQL 密碼
-    database: 'global_tech_db'
-});
+    // 2. 設定資料庫連線
+    // 請將這裡的資訊改成你自己的 MySQL 設定
+    const db = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',      // 你的 MySQL 帳號
+        password: '',      // 你的 MySQL 密碼
+        database: 'global_tech_db'
+    });
 
 // 測試連線
 db.connect(err => {
@@ -25,7 +26,7 @@ db.connect(err => {
         console.log('成功連接到 MySQL 資料庫');
     }
 });
-
+}
 // 3. 建立 API 路由
 // 前端會呼叫: http://localhost:3000/api?query=ai
 app.get('/api', (req, res) => {
