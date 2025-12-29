@@ -1,7 +1,8 @@
 const http = require('http');
 const fs = require('fs');
-const ejs = require('ejs');
 const path = require('path');
+const querystring = require('querystring'); // 用來解析 POST 表單資料
+const ejs = require('ejs');
 
 http.createServer((req, res) => {
   let filePath = '';
@@ -11,15 +12,14 @@ switch (req.url) {
     case '/':
       filePath = '/views/login.ejs';
       break;
+    case '/dashboard':
+      filePath = '/views/dashboard.ejs';
+
     default:
-      break;
-}
-if (req.url.endsWith('.css') || req.url.endsWith('.js') || req.url.endsWith('.png')) { 
-  
-  fileOtherFile = req.url;
+      filePath = req.url;
+      fileOtherFile = filePath;// 這個到底是幹嘛的
 }
 
-  const extname = (fileOtherFile === '') ? path.extname(filePath) : path.extname(fileOtherFile);
 
   const contentTypes = {
     '.html': 'text/html; charset=utf-8',        // HTML 網頁文件
@@ -33,7 +33,7 @@ if (req.url.endsWith('.css') || req.url.endsWith('.js') || req.url.endsWith('.pn
     '.svg': 'image/svg+xml',                    // SVG 向量圖形
     '.ico': 'image/x-icon'                      // 網站 favicon 圖示
   };
-
+  const extname = (fileOtherFile === '') ? path.extname(filePath) : path.extname(fileOtherFile);
   const contentType = contentTypes[extname] || 'text/plain';
 
   if (extname === '.ejs') {
@@ -52,20 +52,12 @@ if (req.url.endsWith('.css') || req.url.endsWith('.js') || req.url.endsWith('.pn
 
   } else {
     const staticFilePath = '.' + fileOtherFile;
-
-
-    fs.readFile(staticFilePath, (err, content) => {
-      if (err) {
-        const index3ErrPath = './error404/error404.ejs';
-        fs.readFile(index3ErrPath, 'utf8', (errEjs, template) => { 
-          if (errEjs) { 
-            console.error('讀取失敗:', errEjs);
-            res.end('404 - 找不到文件：'); 
-          } else {
-            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-
-            res.end(template);
-          }
+    fs.readFile(staticFilePath, 'utf8', (err, content) => {
+      if (err) {// 讀取靜態資源失敗，回傳 404
+        fs.readFile(('.' + '/views/error.ejs'), 'utf8', (err, template) => {
+          const html = ejs.render(template);
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(html);
         });
       } else {
         res.writeHead(200, { 'Content-Type': contentType });
@@ -77,6 +69,7 @@ if (req.url.endsWith('.css') || req.url.endsWith('.js') || req.url.endsWith('.pn
   console.log('伺服器已啟動！請訪問 http://localhost:3000');
   console.log('可用路由：');
   console.log('  - http://localhost:3000');
+  console.log('  - http://localhost:3000/dashboard');
   console.log('  - 其他路徑將顯示 404 錯誤頁面');
 });
 
