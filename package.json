@@ -1,6 +1,7 @@
 {
   "name": "aeust114-1",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "routing.js",
   "scripts": {
