@@ -3,7 +3,7 @@ import mysql from 'mysql2';
 
 // 配置連線資訊
 const config = {
-    host: 'localhost',
+    host: '34.81.11.12',
     user: 'AEUST_student',
     password: '112111122',
     database: 'aeust'
