@@ -1,9 +1,11 @@
 import dynamicR from './dynamicResources.js';//動態資源模組
 import { handleRegister } from './register.js';//註冊模組
 import { handleLogin } from './loginLogic.js';//登入邏輯模組
-import {showSettings,handleSettings,getThemeFromCookie} from './settingmod.js';
+import { checkAuth } from './Authorization.js';
+import { showSettings, handleSettings, getThemeFromCookie } from './settingmod.js';
 import {addEmployee,updateEmployee,deleteEmployee} from './employrr.js'
 import db from '../db.js';
+
 
 // 1. 顯示登入頁 (GET)
 export function showLogin(res) {
@@ -17,27 +19,36 @@ export { handleLogin };
 export {showSettings,handleSettings};
 
 
-
 // 3. 顯示儀表板 (GET)
-export function showDashboard(req,res) {
+export function showDashboard(req, res) {
+    
+    // 1. 先呼叫檢查工具
+    const currentUser = checkAuth(req, res);
+
+    // 2. 如果檢查結果是 false，代表沒權限 (且 checkAuth 已經幫忙顯示錯誤頁面了)
+    // 我們只要這裡直接 return 停住，不要往下跑就好
+    if (currentUser === false) {
+        return; 
+    }
+
+    // --- 3. 只有權限通過才會執行下面的資料庫查詢 ---
+    console.log('授權通過，使用者:', currentUser.email);
     const currentTheme = getThemeFromCookie(req);
     const sql = 'SELECT * FROM employees ORDER BY id DESC';
-    //新增的出現在最上面
     
     db.query(sql, (err, results) => {
         if (err) {
-            console.error('讀取員工列表失敗:', err);
-            // 發生錯誤時，也可以傳空陣列避免網頁壞掉
-            return dynamicR(res, 'dashboard', 
-                { adminName: "管理員", employees: [] ,theme: currentTheme}
-            );
+            return dynamicR(res, 'dashboard', { adminName: "管理員", employees: [], theme: currentTheme });
         }
-        // 將資料庫撈到的 results 傳給前端
-        dynamicR(res, 'dashboard', 
-            { adminName: "模組化管理員", employees: results ,theme: currentTheme}
-        );
+
+        dynamicR(res, 'dashboard', { 
+            adminName: currentUser.email, // 這裡可以顯示登入者的 Email
+            employees: results, 
+            theme: currentTheme 
+        });
     });
 }
+
 
 // 4. 處理 404
 export function Error404(res) {

@@ -1,6 +1,7 @@
 import db from '../db.js';
 import querystring from 'querystring';
 import dynamicR from './dynamicResources.js';
+import { activeSessions, generateSessionId } from './session.js';
 
 export function handleLogin(req, res) {
     let body = '';//因為資料是分批進來的，我們需要一個容器先把收到的碎片暫時存起來。
@@ -24,8 +25,15 @@ export function handleLogin(req, res) {
             // results 是一個陣列，如果長度大於 0，代表有找到這個人
             if (results.length > 0) {//這行就是在問：「箱子裡有東西嗎？」
                 // 如果有東西 (> 0) ，代表SQL有找到人，則判定登入成功。
+                const sessionId = generateSessionId();//產生通行證 ID
+                activeSessions[sessionId] = {//在伺服器登記：這組 ID 屬於這位使用者
+                    email: results[0].email,
+                    // 如果資料庫有 name 欄位也可以存進去
+                    // name: results[0].name 
+                };
                 console.log(`使用者 ${results[0].email} 登入成功`);
-                res.writeHead(302, { 'Location': '/dashboard' });
+                res.writeHead(302, { 'Set-Cookie': `session_id=${sessionId}; Path=/; HttpOnly`, 
+                    'Location': '/dashboard' });
                 res.end();
             } else {
                 // 如果是空的 (else)，代表 SQL 沒找到人，判定登入失敗。
