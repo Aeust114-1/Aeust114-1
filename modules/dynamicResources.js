@@ -18,6 +18,11 @@ function dynamicR(res, filename, data = {}) {
     // 如果 filename 是 'index'，這裡就會變成 './views/index.ejs'。
     const filePath = './views/' + filename + '.ejs'; 
 
+    if (!data.theme) {
+        data.theme = 'light';// 如果 controller 沒傳 theme 進來，我們就預設用 'light' (亮色)
+    }
+
+    
     // --- 步驟 2: 讀取檔案 (非同步) ---
     // 使用 fs.readFile 去硬碟撈檔案。
     // 'utf8'：這是編碼格式，確保讀出來的是我們看得懂的文字，而不是電腦的二進位亂碼。

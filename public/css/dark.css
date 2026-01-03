@@ -1,0 +1,94 @@
+/* 檔案：public/css/dark.css (完整修正版) */
+
+/* 1. 全局背景 */
+body { 
+    background-color: #121212; 
+    color: #e0e0e0; 
+}
+
+/* 2. 主內容區 & 側邊欄 */
+.main-content {
+    background-color: #121212; 
+    min-height: 100vh;
+}
+.sidebar { 
+    background-color: #000000; 
+    color: #ccc; 
+    border-right: 1px solid #333; 
+}
+a.text-dark { color: #e0e0e0 !important; }
+
+/* 3. 卡片 (容器) */
+.card { 
+    background-color: #1e1e1e; 
+    color: #ffffff; 
+    border: 1px solid #333; 
+}
+
+/* 4. 表格深度修正 (解決白色橫條問題) */
+.table {
+    border-color: #444;
+}
+/* 🔥 關鍵：把 tbody, td, th 的背景全部改透明 */
+.table > :not(caption) > * > * {
+    background-color: transparent !important;
+    color: #e0e0e0 !important;
+    border-bottom-color: #444;
+}
+/* 表頭特別加深一點，跟內容區隔 */
+.table thead th {
+    background-color: #252525 !important;
+}
+/* 滑鼠滑過的效果 */
+.table-hover tbody tr:hover > * {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+/* 5. 圓形頭像修正 */
+.avatar {
+    background-color: #444 !important;
+    color: #fff !important;
+}
+.avatar.text-dark {
+    color: #fff !important;
+}
+
+/* 6. 按鈕優化 */
+.btn-outline-primary {
+    color: #6ea8fe;
+    border-color: #6ea8fe;
+}
+.btn-outline-primary:hover {
+    background-color: #6ea8fe;
+    color: #000;
+}
+.btn-outline-danger {
+    color: #ff6b6b;
+    border-color: #ff6b6b;
+}
+.btn-outline-danger:hover {
+    background-color: #ff6b6b;
+    color: #000;
+}
+
+/* 7. 彈出視窗 & 輸入框 */
+.modal-content {
+    background-color: #1e1e1e;
+    color: #fff;
+    border: 1px solid #444;
+}
+.btn-close { filter: invert(1); }
+.form-control, .form-select {
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    color: #fff;
+}
+.form-control:focus, .form-select:focus {
+    background-color: #333;
+    color: #fff;
+}
+
+.text-muted {
+    color: #adb5bd !important; /* 淺灰色，對比度剛好 */
+}
