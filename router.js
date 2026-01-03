@@ -1,7 +1,7 @@
 // 檔案：router.js
 import * as controller from './modules/userController.js'; // 把所有功能引入並取名為 controller
 import { serveStatic } from './modules/staticResources.js';
-
+import * as adminController from './modules/adminController.js';
 function router(req, res) {
 
     if (req.url.startsWith('/public/')) {
@@ -34,6 +34,13 @@ function router(req, res) {
                 controller.handleRegister(req, res);
             }
             break;
+
+            case '/admin/approve':
+                adminController.showAdminPanel(req, res);
+                break;
+            case '/api/approve':
+                if (req.method === 'POST') adminController.approveUser(req, res);
+                break;
             
             case '/dashboard':
             // 必須傳入 req 和 res，因為 userController.js 剛剛改成需要 req 了

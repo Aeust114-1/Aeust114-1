@@ -43,6 +43,7 @@ export function showDashboard(req, res) {
 
         dynamicR(res, 'dashboard', { 
             adminName: currentUser.email, // 這裡可以顯示登入者的 Email
+            currentUserPosition: currentUser.position,
             employees: results, 
             theme: currentTheme 
         });

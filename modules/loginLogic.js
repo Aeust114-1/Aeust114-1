@@ -25,21 +25,28 @@ export function handleLogin(req, res) {
             // results 是一個陣列，如果長度大於 0，代表有找到這個人
             if (results.length > 0) {//這行就是在問：「箱子裡有東西嗎？」
                 // 如果有東西 (> 0) ，代表SQL有找到人，則判定登入成功。
-                const sessionId = generateSessionId();//產生通行證 ID
-                activeSessions[sessionId] = {//在伺服器登記：這組 ID 屬於這位使用者
-                    email: results[0].email,
-                    // 如果資料庫有 name 欄位也可以存進去
-                    // name: results[0].name 
-                };
-                console.log(`使用者 ${results[0].email} 登入成功`);
-                res.writeHead(302, { 'Set-Cookie': `session_id=${sessionId}; Path=/; HttpOnly`, 
-                    'Location': '/dashboard' });
-                res.end();
-            } else {
-                // 如果是空的 (else)，代表 SQL 沒找到人，判定登入失敗。
-                //登入失敗 (找不到符合的帳號密碼)
-                dynamicR(res, 'login', { error: "帳號或密碼錯誤" });
+   const user = results[0];
+
+            // 🔥 檢查 1：審核機制
+            if (user.status === 'pending') {
+                return dynamicR(res, 'login', { error: "您的帳號尚在審核中，請聯繫管理員。" });
             }
+
+            // 🔥 檢查 2：產生 Session 並寫入職位資訊
+            const sessionId = generateSessionId();
+            activeSessions[sessionId] = {
+                email: user.email,
+                position: user.position // 關鍵：把 "A級人員" 這個身分記在通行證裡
+            };
+            
+            console.log(`使用者 ${user.email} (${user.position}) 登入成功`);
+            // ... (原本的 res.writeHead 轉址程式碼) ...
+            res.writeHead(302, { 'Set-Cookie': `session_id=${sessionId}; Path=/; HttpOnly`, 'Location': '/dashboard' });
+            res.end();
+
+        } else {
+            dynamicR(res, 'login', { error: "帳號或密碼錯誤" });
+        }
         });
     });
 }
