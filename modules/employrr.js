@@ -1,6 +1,8 @@
-import db from '../db.js';//測試資料庫模組
+// 目的：員工管理的 CRUD（新增、修改、刪除）
 
+import db from '../db.js';//匯入資料庫模組
 
+//壹、新增人員
 export function addEmployee(req, res) {
     let body = '';
 
@@ -9,7 +11,7 @@ export function addEmployee(req, res) {
         body += chunk.toString();
     });
 
-//     // 2. 資料接收完畢後執行
+    // 2. 資料接收完畢後執行
     req.on('end', () => {
         try {
              // 把 JSON 字串轉成物件
@@ -42,17 +44,17 @@ export function addEmployee(req, res) {
 }
 
 
-// [新增] 8. 處理更新員工邏輯 (PUT)
+// 貳、更新人員訊息
 export function updateEmployee(req, res) {
     let body = '';
     req.on('data', chunk => body += chunk.toString());
-    req.on('end', () => {
+    req.on('end', function()  {
         try {
             const data = JSON.parse(body);
             const { id, name, email, position, department, status } = data;
             const sql = 'UPDATE employees SET name=?, email=?, position=?, department=?, status=? WHERE id=?';
             
-            db.query(sql, [name, email, position, department, status, id], (err, result) => {
+            db.query(sql, [name, email, position, department, status, id], function(err, result) {
                 if (err) {
                     console.error(err);
                     res.writeHead(500, { 'Content-Type': 'application/json' });
@@ -69,11 +71,11 @@ export function updateEmployee(req, res) {
     });
 }
 
-// [新增] 9. 處理刪除員工邏輯 (DELETE)
+// 參、刪除人員 
 export function deleteEmployee(req, res) {
     let body = '';
     req.on('data', chunk => body += chunk.toString());
-    req.on('end', () => {
+    req.on('end', function() {
         try {
             const data = JSON.parse(body);
             const { id } = data;

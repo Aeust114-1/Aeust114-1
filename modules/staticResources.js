@@ -1,3 +1,5 @@
+// 目的：靜態資源管理
+
 import fs from 'fs';
 import path from 'path';
 import getContentType from './mimeType.js'; // 引入 MIME 判斷
@@ -11,7 +13,7 @@ export function serveStatic(req, res) {
     const extname = path.extname(otherPathfile).toLowerCase();
     
     // 3. 讀取檔案
-    fs.readFile(otherPathfile, (err, content) => {
+    fs.readFile(otherPathfile, function(err, content) {
         if (err) {
             if (err.code == 'ENOENT') {
                 // 找不到檔案 (404)

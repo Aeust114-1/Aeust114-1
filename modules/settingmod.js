@@ -1,5 +1,5 @@
-// 檔案：modules/userController.js (新增部分)
-import querystring from 'querystring'; // 記得引入
+// 目的：處理深色及淺色主題的 Cookie 設定。
+import querystring from 'querystring'; // 引入querystring
 import dynamicR from './dynamicResources.js';//動態資源模組
 
 

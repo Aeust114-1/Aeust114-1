@@ -1,4 +1,4 @@
-// 檔案：modules/Authorization.js
+// 目的：守門員 (Middleware)。檢查 Session 是否有效。
 import { activeSessions } from './session.js';
 import querystring from 'querystring';
 import dynamicR from './dynamicResources.js';

@@ -1,4 +1,4 @@
-// 整合資源，模組中樞
+// 目的：整合資源，模組中樞
 
 // 0. 動態資源模組
 import dynamicR from './dynamicResources.js';

@@ -1,4 +1,6 @@
-  const contentTypes = {
+// 目的：為資源提供參考字典
+
+const contentTypes = {
   '.html': 'text/html; charset=utf-8',        // HTML 網頁文件
   '.ejs': 'text/html; charset=utf-8',         // EJS 模板（渲染後輸出為 HTML）
   '.js': 'text/javascript; charset=utf-8',    // JavaScript 腳本文件
