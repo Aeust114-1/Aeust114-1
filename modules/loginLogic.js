@@ -1,8 +1,8 @@
-//目的：解析 Body、查資料庫、寫 Session
+//目的：為登入介面做查詢、解析 Body、查資料庫、寫 Session
 
 
 import db from '../db.js';
-import querystring from 'querystring';
+import querystring from 'querystring';//專門負責在「字串 (String)」與「物件 (Object)」之間進行轉換。
 import dynamicR from './dynamicResources.js';
 import { activeSessions, generateSessionId } from './session.js';
 
@@ -13,8 +13,14 @@ export function handleLogin(req, res) {
     //req：使用者的請求，它本身是一個「唯讀串流 (Readable Stream)」。
     //.on(...)：這是 Node.js 的「事件監聽器」。意思是：「當......發生的時候，請執行後面的動作」。
     req.on('end', function() {
-        const formData = querystring.parse(body);//parse 後變成好用的物件：
-        const { email, password } = formData;//同時拿出 email 和 password
+        
+        
+        /*解釋querystring.parse()
+        使用 querystring.parse() 進行翻譯
+        這裡不需要第二個參數，因為預設就是用 '&' 來切割
+        */  
+        const formData = querystring.parse(body);//parse 後變成物件：
+        const { email, password } = formData;//現在可以像物件一樣操作了；同時拿出 email 和 password
         const sqlInstruction = 'SELECT * FROM users WHERE email = ? AND password = ?';// 使用 ? 是為了防止 SQL Injection (駭客攻擊)，這是安全寫法
 
         db.query(sqlInstruction, [email, password], function(err, results) {//callback
@@ -35,7 +41,7 @@ export function handleLogin(req, res) {
                 return dynamicR(res, 'login', { error: "您的帳號尚在審核中，請聯繫管理員。" });
             }
 
-            // 🔥 檢查 2：產生 Session 並寫入職位資訊
+            // 檢查 2：產生 Session 並寫入職位資訊
             const sessionId = generateSessionId();
             activeSessions[sessionId] = {
                 email: user.email,
