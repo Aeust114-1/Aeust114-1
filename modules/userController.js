@@ -1,4 +1,7 @@
-import dynamicR from './dynamicResources.js';//動態資源模組
+// 整合資源，模組中樞
+
+// 0. 動態資源模組
+import dynamicR from './dynamicResources.js';
 import { handleRegister } from './register.js';//註冊模組
 import { handleLogin } from './loginLogic.js';//登入邏輯模組
 import { checkAuth } from './Authorization.js';
@@ -12,14 +15,16 @@ export function showLogin(res) {
     dynamicR(res, 'login', { error: null });
 }
 
+
 // 2. 處理登入邏輯 (POST)
 export { handleLogin };
 
-//處理setting,顯示設定頁 (GET),處理設定儲存 (POST)
+
+// 3. 處理setting,顯示設定頁 (GET),處理設定儲存 (POST)
 export {showSettings,handleSettings};
 
 
-// 3. 顯示儀表板 (GET)
+// 4. 顯示儀表板 (GET)
 export function showDashboard(req, res) {
     
     // 1. 先呼叫檢查工具
@@ -51,20 +56,22 @@ export function showDashboard(req, res) {
 }
 
 
-// 4. 處理 404
+// 5. 處理 404
 export function Error404(res) {
     // 如果有 error.ejs 就用 dynamicR，沒有就回傳文字
     dynamicR(res, 'error', { message: "找不到此頁面 (404)" });
 }
 
+
+// 6. {新增、修改、刪除}人員名單
 export{addEmployee,updateEmployee,deleteEmployee};
 
-// 5. 顯示註冊頁 (GET)
+// 7. 顯示註冊頁 (GET)
 export function showRegister(res) {
     dynamicR(res, 'register', { error: null });
 }
 
-// 6. 處理註冊邏輯 (POST)
+// 8. 處理註冊邏輯 (POST)
 export { handleRegister };
 
 

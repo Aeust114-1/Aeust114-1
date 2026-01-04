@@ -1,4 +1,6 @@
-// 檔案：modules/register.js
+// 目的：查重複 Email、新增使用者
+
+
 import db from '../db.js';
 import querystring from 'querystring';
 import dynamicR from './dynamicResources.js';

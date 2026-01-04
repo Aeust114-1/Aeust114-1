@@ -1,3 +1,6 @@
+//目的：解析 Body、查資料庫、寫 Session
+
+
 import db from '../db.js';
 import querystring from 'querystring';
 import dynamicR from './dynamicResources.js';
@@ -25,9 +28,9 @@ export function handleLogin(req, res) {
             // results 是一個陣列，如果長度大於 0，代表有找到這個人
             if (results.length > 0) {//這行就是在問：「箱子裡有東西嗎？」
                 // 如果有東西 (> 0) ，代表SQL有找到人，則判定登入成功。
-   const user = results[0];
+            const user = results[0];
 
-            // 🔥 檢查 1：審核機制
+            // 檢查 1：審核機制
             if (user.status === 'pending') {
                 return dynamicR(res, 'login', { error: "您的帳號尚在審核中，請聯繫管理員。" });
             }
